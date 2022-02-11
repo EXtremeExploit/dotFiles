@@ -1,0 +1,16 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = EXtremeExploit
+	email = gdextremeexploit@gmail.com
+[core]
+	editor = code --wait
+#	autocrlf = true
+[credential]
+	helper = store
+	canFallBackToInsecureStore = true
+[init]
+	defaultBranch = master

@@ -1,0 +1,5 @@
+Simp1e cursor family
+
+1. Extract the archive (I assume that you already did it).
+2. Move the folder to ~/.icons ( /home/YourUserName/.icons ).
+3. The theme will appear in your DE's settings manager where you can choose it.

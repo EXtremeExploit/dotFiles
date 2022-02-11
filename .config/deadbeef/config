@@ -1,0 +1,117 @@
+artwork.filemask *cover*.jpg;*front*.jpg;*folder*.jpg;*cover*.png;*front*.png;*folder*.png
+chip.voices 255
+cli_add_playlist_name Default
+deadbeef_version 1.8.8
+filebrowser.autofilter 1
+filebrowser.bgcolor 
+filebrowser.bgcolor_selected 
+filebrowser.coverart_files cover.png;cover.jpg;folder.png;folder.jpg;front.png;front.jpg
+filebrowser.coverart_scale 1
+filebrowser.coverart_size 24
+filebrowser.defaultpath 
+filebrowser.enabled 1
+filebrowser.expanded_rows 
+filebrowser.extra_bookmarks $HOME/.config/deadbeef/bookmarks
+filebrowser.fgcolor 
+filebrowser.fgcolor_selected 
+filebrowser.filter 
+filebrowser.filter_enabled 1
+filebrowser.font_size 0
+filebrowser.fullsearch_wait 5
+filebrowser.hidden 0
+filebrowser.hide_navigation 0
+filebrowser.hide_search 0
+filebrowser.hide_toolbar 0
+filebrowser.icon_size 24
+filebrowser.save_treeview 1
+filebrowser.search_delay 1000
+filebrowser.show_coverart 1
+filebrowser.showbookmarks 1
+filebrowser.showhidden 0
+filebrowser.showicons 1
+filebrowser.sidebar_width 220
+filebrowser.sort_treeview 1
+filebrowser.treelines 0
+gtkui.color.bar_background 0 0 0
+gtkui.color.bar_foreground 41693 1644 1644
+gtkui.columns.playlist [{"title":"♫","id":"1","format":"%playstatus%","sort_format":"","size":"50","align":"0","color_override":"0","color":"#ff000000"},{"title":"Título","id":"-1","format":"%title%","sort_format":"","size":"150","align":"0","color_override":"0","color":"#ff000000"},{"title":"Artista / Álbum","id":"-1","format":"$if(%artist%,%artist%,Unknown Artist)[ - %album%]","sort_format":"","size":"406","align":"0","color_override":"0","color":"#ff000000"},{"title":"Duración","id":"-1","format":"%length%","sort_format":"","size":"71","align":"0","color_override":"0","color":"#ff000000"},{"title":"Personalizar","id":"9","format":"%last_modified%","sort_format":"","size":"149","align":"0","color_override":"0","color":"#ffcccccc"}]
+gtkui.eq.visible 0
+gtkui.hide_tray_icon 1
+gtkui.layout.0.6.2 hsplitter locked=0 ratio=0.181771 pos=0 size2=0 {vsplitter locked=0 ratio=0.659554 pos=0 size2=0 {pltbrowser {} coverart {} } hsplitter locked=0 ratio=0.716933 pos=0 size2=0 {vsplitter locked=0 ratio=0.967022 pos=0 size2=0 {vsplitter locked=0 ratio=0.976931 pos=0 size2=0 {tabs active=0 num_tabs=3 tab000="Lista de reproducción" tab001="placeholder" tab002="placeholder" {playlist hideheaders=0 width=1120 {} placeholder {} placeholder {} } hbox expand="1 1 1" fill="0 0 1" homogeneous=1 {placeholder {} playtb {} volumebar {} } } seekbar {} } selproperties {} } } 
+gtkui.override_bar_colors 1
+gtkui.override_tabstrip_colors 0
+gtkui.show_menu 1
+gtkui.start_hidden 0
+gtkui.statusbar.visible 0
+gtkui.statusbar_seltime 1
+gtkui.tabscroll 0
+gtkui.titlebar_playing_tf %artist% - %title%
+gtkui.titlebar_stopped_tf DeaDBeeF-%_deadbeef_version%
+gui_plugin GTK3
+hotkey.key01 "Ctrl f" 0 0 find
+hotkey.key02 "Ctrl o" 0 0 open_files
+hotkey.key03 "Ctrl q" 0 0 quit
+hotkey.key04 "Ctrl n" 0 0 new_playlist
+hotkey.key05 "Ctrl a" 0 0 select_all
+hotkey.key06 "Escape" 0 0 deselect_all
+hotkey.key07 "Ctrl m" 0 0 toggle_stop_after_current
+hotkey.key08 "Ctrl j" 0 0 jump_to_current_track
+hotkey.key09 "F1" 0 0 help
+hotkey.key10 "Delete" 1 0 remove_from_playlist
+hotkey.key11 "Ctrl w" 0 0 remove_current_playlist
+hotkey.key13 "Alt Return" 1 0 track_properties
+hotkey.key14 "Return" 0 0 play
+hotkey.key15 "Ctrl p" 0 0 toggle_pause
+hotkey.key16 "Alt 1" 0 0 playlist1
+hotkey.key17 "Alt 2" 0 0 playlist2
+hotkey.key18 "Alt 3" 0 0 playlist3
+hotkey.key19 "Alt 4" 0 0 playlist4
+hotkey.key20 "Alt 5" 0 0 playlist5
+hotkey.key21 "Alt 6" 0 0 playlist6
+hotkey.key22 "Alt 7" 0 0 playlist7
+hotkey.key23 "Alt 8" 0 0 playlist8
+hotkey.key24 "Alt 9" 0 0 playlist9
+hotkey.key25 "Alt 0" 0 0 playlist10
+hotkey.key26 z 0 0 prev
+hotkey.key27 x 0 0 play
+hotkey.key28 c 0 0 toggle_pause
+hotkey.key29 v 0 0 stop
+hotkey.key30 b 0 0 next
+hotkey.key31 n 0 0 playback_random
+hotkey.key32 "Ctrl k" 0 0 toggle_stop_after_album
+hotkeys_created 1
+junk.enable_cp936_detection 1
+junk.enable_shift_jis_detection 1
+logwindow.geometry.h 724
+logwindow.geometry.w 777
+logwindow.geometry.x 712
+logwindow.geometry.y 262
+mainwin.geometry.h 703
+mainwin.geometry.maximized 1
+mainwin.geometry.w 1143
+mainwin.geometry.x 406
+mainwin.geometry.y 158
+network.proxy.port 8080
+output_plugin alsa
+playback.loop 1
+playback.volume -29.78722
+playlist.current 0
+playlist.cursor.0 3
+playlist.scroll.0 -3
+playlist.scroll.cursorfollowplayback 1
+playlist.tab.00000 Música
+prefwin.geometry.h 693
+prefwin.geometry.w 837
+prefwin.geometry.x 690
+prefwin.geometry.y 125
+resume.paused 1
+resume.playlist 0
+resume.position 157.52485
+resume.track 3
+streamer.samplerate 44100
+streamer.samplerate_mult_44 44100
+streamer.samplerate_mult_48 48000
+trkproperties.geometry.h 589
+trkproperties.geometry.w 792
+trkproperties.geometry.x 649
+trkproperties.geometry.y 264

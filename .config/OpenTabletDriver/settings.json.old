@@ -1,0 +1,88 @@
+{
+  "OutputMode": {
+    "Path": "OpenTabletDriver.Desktop.Output.AbsoluteMode",
+    "Settings": [],
+    "Enable": true
+  },
+  "Filters": [
+    {
+      "Path": "Chatter_Exterminator.Chatter_Exterminator_Filter",
+      "Settings": [
+        {
+          "Property": "AntichatterStrength",
+          "Value": 2.0,
+          "HasValue": true
+        }
+      ],
+      "Enable": true
+    },
+    {
+      "Path": "RadialFollow.RadialFollowSmoothing",
+      "Settings": [
+        {
+          "Property": "OuterRadius",
+          "Value": 1.0,
+          "HasValue": true
+        },
+        {
+          "Property": "InnerRadius",
+          "Value": 0.05,
+          "HasValue": true
+        },
+        {
+          "Property": "SmoothingCoefficient",
+          "Value": 0.92,
+          "HasValue": true
+        },
+        {
+          "Property": "SoftKneeScale",
+          "Value": 3.0,
+          "HasValue": true
+        },
+        {
+          "Property": "SmoothingLeakCoefficient",
+          "Value": 0.0,
+          "HasValue": true
+        }
+      ],
+      "Enable": false
+    }
+  ],
+  "AutoHook": false,
+  "LockUsableAreaDisplay": true,
+  "LockUsableAreaTablet": true,
+  "DisplayWidth": 1920.0,
+  "DisplayHeight": 1080.0,
+  "DisplayXOffset": 960.0,
+  "DisplayYOffset": 540.0,
+  "TabletWidth": 50.0,
+  "TabletHeight": 35.0,
+  "TabletXOffset": 105.0,
+  "TabletYOffset": 25.0,
+  "TabletRotation": 270.0,
+  "EnableClipping": false,
+  "EnableAreaLimiting": false,
+  "LockAspectRatio": false,
+  "XSensitivity": 0.0,
+  "YSensitivity": 0.0,
+  "RelativeRotation": 0.0,
+  "RelativeResetDelay": "00:00:00",
+  "TipActivationPressure": 0.0,
+  "TipButton": null,
+  "PenButtons": [
+    null,
+    null
+  ],
+  "AuxButtons": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "Tools": [],
+  "Interpolators": []
+}

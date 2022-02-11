@@ -1,0 +1,14 @@
+12/1/2022 18:20:31
+System.Net.Sockets.SocketException
+Address already in use
+System.Net.Sockets
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at System.IO.Pipes.NamedPipeServerStream.SharedServer..ctor(String path, Int32 maxCount)
+   at System.IO.Pipes.NamedPipeServerStream.SharedServer.Get(String path, Int32 maxCount)
+   at System.IO.Pipes.NamedPipeServerStream.Create(String pipeName, PipeDirection direction, Int32 maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, PipeOptions options, Int32 inBufferSize, Int32 outBufferSize, HandleInheritability inheritability)
+   at OpenTabletDriver.Desktop.RPC.RpcHost`1.Run(T host)
+   at OpenTabletDriver.Daemon.Program.Main(String[] args)
+   at OpenTabletDriver.Daemon.Program.<Main>(String[] args)
+UpdateStatusAfterSocketErrorAndThrowException
