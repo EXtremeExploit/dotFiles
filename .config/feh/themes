@@ -1,0 +1,7 @@
+feh --scale-down\
+--auto-zoom\
+--no-fehbg\
+--zoom-step 15\
+--edit\
+--title "%n (%wZ%h)"\
+--info ";echo 'Path: %f \nName: %n \nSize: %S (%s)\nImage Dimensions: %w,%h \nWindow Dimensions: %g \nMode: %m \nOffset: %o \nPixels: %P (%p) \nFormat: %t \nZoom: %Z'"

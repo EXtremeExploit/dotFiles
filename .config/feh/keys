@@ -1,0 +1,35 @@
+# Unbinds
+next_img
+prev_img
+reload_plus
+reload_minus
+render
+toggle_aliasing
+draw_actions
+
+
+# Image info
+toggle_info i
+toggle_exif e
+
+# Rotation and editing
+mirror bar
+flip underscore
+orient_1 greater
+orient_3 S-greater
+
+# Navigation
+next_img Right
+prev_img Left
+
+# Zoom
+zoom_in "+"
+zoom_out "-"
+zoom_fit z
+zoom_default r
+
+toggle_aliasing a
+reload_image F5
+size_to_image w
+toggle_menu m Menu
+toggle_pointer p
