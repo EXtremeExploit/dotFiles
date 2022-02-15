@@ -1,0 +1,52 @@
+[Added Associations]
+application/vnd.adobe.flash.movie=flashplayer-standalone.desktop
+application/x-bittorrent=org.qbittorrent.qBittorrent.desktop
+application/x-osu-archive=osu-file-extensions-handler.desktop
+application/x-wine-extension-ini=org.kde.kate.desktop
+inode/directory=nemo.desktop
+video/mp4=mpv.desktopvlc.desktop
+video/x-matroska=mpv.desktopvlc.desktop
+x-scheme-handler/http=google-chrome.desktop
+x-scheme-handler/https=google-chrome.desktop
+x-scheme-handler/mailto=thunderbird.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-YSJPC1.desktop
+image/jpeg=feh.desktop
+image/png=feh.desktop
+image/gif=mpv.desktop
+x-scheme-handler/osu=osuhandler.desktop
+application/x-osu-beatmap=userapp-kate-5L83F1.desktopcode-oss.desktop
+video/webm=mpv.desktop
+
+[Default Applications]
+application/vnd.adobe.flash.movie=flashplayer-standalone.desktop
+application/x-bittorrent=org.qbittorrent.qBittorrent.desktop
+application/x-gnome-saved-search=nemo.desktop
+
+# osu!
+application/x-osu-archive=osu-file-extensions-handler.desktop
+application/x-osu-beatmap=userapp-kate-5L83F1.desktop
+x-scheme-handler/osu=osuhandler.desktop
+
+application/x-wine-extension-ini=org.kde.kate.desktop
+
+inode/directory=nemo.desktop
+
+# Chrome
+chromtext/html=google-chrome.desktop
+x-scheme-handler/http=google-chrome.desktop
+x-scheme-handler/https=google-chrome.desktop
+
+# Media
+image/jpeg=feh.desktop
+image/png=feh.desktop
+image/gif=mpv.desktop
+text/plain=micro.desktop
+video/mp4=mpv.desktop
+video/webm=mpv.desktop
+video/x-matroska=mpv.desktop
+
+x-scheme-handler/arc-file=appimagekit_c4432210655982161597330e0e398f19-AdvancedRestClient.desktop
+x-scheme-handler/mailto=thunderbird.desktop
+x-scheme-handler/tetrio=tetrio-desktop.desktop
+x-scheme-handler/slack=slack.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-YSJPC1.desktop

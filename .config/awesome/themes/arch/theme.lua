@@ -70,7 +70,7 @@ theme.menu_width  = 100
 -- beautiful.variable in your rc.lua
 --theme.bg_widget = "#cc0000"
 
-theme.wallpaper = themes_path.."background.png"
+theme.wallpaper = themes_path.."arch.png"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(

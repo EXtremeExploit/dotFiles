@@ -61,7 +61,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/theme/theme.lua")
+beautiful.init("~/.config/awesome/theme.lua")
 naughty.config.defaults['icon_size'] = 100
 
 -- This is used later as the default terminal and editor to run.
@@ -599,3 +599,4 @@ switcher.settings.client_opacity_value_in_focus = 0.5                -- alpha-va
 switcher.settings.client_opacity_value_selected = 1                  -- alpha-value for the selected client
 
 switcher.settings.cycle_raise_client = false                          -- raise clients on cycle
+gears.timer.start_new(10, function() collectgarbage("step", 100000) return true end)
