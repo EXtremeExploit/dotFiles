@@ -7,7 +7,7 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
-local themes_path = "~/.config/awesome/theme/"
+local themes_path = "~/.config/awesome/themes/milk/"
 
 local theme = {}
 

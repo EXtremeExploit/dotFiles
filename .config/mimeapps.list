@@ -50,3 +50,6 @@ x-scheme-handler/mailto=thunderbird.desktop
 x-scheme-handler/tetrio=tetrio-desktop.desktop
 x-scheme-handler/slack=slack.desktop
 x-scheme-handler/tg=userapp-Telegram Desktop-YSJPC1.desktop
+text/html=google-chrome.desktop
+x-scheme-handler/about=google-chrome.desktop
+x-scheme-handler/unknown=google-chrome.desktop
