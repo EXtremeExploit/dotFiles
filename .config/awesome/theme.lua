@@ -1,1 +1,1 @@
-./themes/milk/theme.lua
+./themes/arch/theme.lua

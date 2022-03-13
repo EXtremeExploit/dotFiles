@@ -559,7 +559,7 @@ awful.rules.rules = {
     },
 
     -- Fullscreen Apps
-    { rule_any= {name = { "osu!.*", "Counter-Strike: Global Offensive.*" }
+    { rule_any= {name = { "osu!.*", "csgo_linux64" }
         },properties = {tag = "F"}
     }
 }
