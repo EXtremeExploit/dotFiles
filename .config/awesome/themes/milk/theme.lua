@@ -11,7 +11,7 @@ local themes_path = "~/.config/awesome/themes/milk/"
 
 local theme = {}
 
-theme.font          = "Retro Gaming 8"
+theme.font          = "Cascadia Code 8"
 
 theme.bg_normal     = "#0d0d14"
 theme.bg_focus      = "#ac3232"

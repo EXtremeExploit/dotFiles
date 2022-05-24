@@ -83,16 +83,12 @@ awful.layout.layouts = {
 -- }}}
 
 mymainmenu = awful.menu({ items = { { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-                                    { "manual", terminal .. " -e man awesome" },
                                     { "edit config", editor_cmd .. " .config/awesome/" },
+                                    { "open terminal", terminal },
                                     { "restart", awesome.restart },
                                     { "quit", function() awesome.quit() end },
-                                    { "open terminal", terminal }
                                   }
                         })
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -233,8 +229,8 @@ end)
 globalkeys = gears.table.join(
     awful.key({ modkey, "Shift" }, "q", awesome.quit, {description = "quit awesome", group = "awesome"}),
     awful.key({ modkey, "Shift" }, "r", awesome.restart, {description = "reload awesome", group = "awesome"}), 
-    awful.key({ modkey }, "w", function () mymainmenu:show() end, {description = "show main menu", group = "awesome"}),
-    awful.key({ modkey }, "s", hotkeys_popup.show_help,{description="show help", group="awesome"}),
+    awful.key({ modkey, "Shift" }, "h", function () mymainmenu:show() end, {description = "show main menu", group = "awesome"}),
+    awful.key({ modkey }, "h", hotkeys_popup.show_help,{description="show help", group="awesome"}),
 
     -- Standard program
     awful.key({ modkey}, "Return", function () awful.spawn(terminal) end, {description = "open a terminal", group = "launcher"}),
@@ -258,14 +254,24 @@ globalkeys = gears.table.join(
     awful.key({modkey},"d", function() os.execute("playerctl next") end, {description="Next track", group="media"}),
     awful.key({modkey},"space", function() awful.spawn("playerctl play-pause") end, {description="Play/Pause track", group="media"}),
 
-    awful.key({modkey},"Insert", function() os.execute("pactl set-sink-volume 0 +2%")
+    awful.key({modkey},"w", function() os.execute("pactl set-sink-volume 0 +2%")
         volume_widget:refresh() end, {description="Increment volume", group="media"}),
-    awful.key({modkey},"Delete", function() os.execute("pactl set-sink-volume 0 -2%")
+    awful.key({modkey},"s", function() os.execute("pactl set-sink-volume 0 -2%")
         volume_widget:refresh() end, {description="Decrease volume", group="media"}),
     
-    awful.key({modkey, "Shift"}, "s", function() awful.spawn.with_shell("maim -s | xclip -selection clipboard -t image/png") end, {description="Capture region"}),
-    awful.key({modkey}, "Print", function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png") end, {description="Capture window"}),
+        -- Screenshotting
+        -- Print = Screen > Clipboard
+        -- Control+Print = Screen > Clipboard & File
+        -- Super+Shift+S = Region > Clipboard
+        -- Super+Control+Shift+S = Region > Clipboard & File
+        -- Super+Print = Window > Clipboard
+        -- Super+Control+Print = Window > Clipboard & File
     awful.key({}, "Print", function() awful.spawn.with_shell("maim | xclip -selection clipboard -t image/png") end, {description="Capture screen"}),
+    awful.key({"Control"}, "Print", function() awful.spawn.with_shell("maim ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png") end, {description="Capture screen and save it to a file"}),
+    awful.key({modkey, "Shift"}, "s", function() awful.spawn.with_shell("maim -s | xclip -selection clipboard -t image/png") end, {description="Capture region"}),
+    awful.key({modkey, "Shift", "Control"}, "s", function() awful.spawn.with_shell("maim -s ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d@%R:%S-%N).png") end, {description="Capture region and save it to a file"}),
+    awful.key({modkey}, "Print", function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png") end, {description="Capture window"}),
+    awful.key({modkey, "Control"}, "Print", function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d@%R:%S-%N).png") end, {description="Capture window and save it to a file"}),
 
     -- Alt+Tab
     awful.key({ "Mod1"}, "Tab",function () switcher.switch( 1, "Mod1", "Alt_L", "Shift", "Tab") end),
@@ -296,9 +302,9 @@ clientkeys = gears.table.join(
               {description = "toggle keep on top", group = "client"}),
     awful.key({modkey}, "x", function(c) c.sticky = not c.sticky end, {description="Toggle Sticky", group="client"}),
 
-    awful.key({modkey}, "Next", function (c) c.minimized = true end, {description = "minimize", group = "client"}),
+    awful.key({modkey}, "n", function (c) c.minimized = true end, {description = "minimize", group = "client"}),
 
-    awful.key({modkey}, "Prior",
+    awful.key({modkey}, "m",
         function (c)
             c.maximized = not c.maximized
             c:raise()
@@ -559,7 +565,7 @@ awful.rules.rules = {
     },
 
     -- Fullscreen Apps
-    { rule_any= {name = { "osu!.*", "csgo_linux64" }
+    { rule_any= {name = { "^osu!.*", "csgo_linux64" }
         },properties = {tag = "F"}
     }
 }

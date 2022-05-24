@@ -1,5 +1,5 @@
 [Added Associations]
-application/vnd.adobe.flash.movie=flashplayer-standalone.desktop
+application/vnd.adobe.flash.movie=userapp-ruffle-4A6KM1.desktop;flashplayer-standalone.desktop;
 application/x-bittorrent=org.qbittorrent.qBittorrent.desktop
 application/x-osu-archive=osu-file-extensions-handler.desktop
 application/x-wine-extension-ini=org.kde.kate.desktop
@@ -48,3 +48,4 @@ x-scheme-handler/unknown=google-chrome.desktop
 x-scheme-handler/discord-424004941485572097=discord-424004941485572097.desktop
 audio/mpeg=deadbeef.desktop
 x-scheme-handler/discord-424928021309554698=discord-424928021309554698.desktop
+x-scheme-handler/discord-712465656758665259=discord-712465656758665259.desktop
