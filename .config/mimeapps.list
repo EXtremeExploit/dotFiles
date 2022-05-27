@@ -17,6 +17,7 @@ x-scheme-handler/osu=osuhandler.desktop
 application/x-osu-beatmap=userapp-kate-5L83F1.desktopcode-oss.desktop
 video/webm=mpv.desktop
 audio/mpeg=deadbeef.desktop;
+application/x-osu-beatmap-archive=osu-file-extensions-handler.desktop;
 
 [Default Applications]
 application/vnd.adobe.flash.movie=flashplayer-standalone.desktop
@@ -49,3 +50,4 @@ x-scheme-handler/discord-424004941485572097=discord-424004941485572097.desktop
 audio/mpeg=deadbeef.desktop
 x-scheme-handler/discord-424928021309554698=discord-424928021309554698.desktop
 x-scheme-handler/discord-712465656758665259=discord-712465656758665259.desktop
+application/x-osu-beatmap-archive=osuhandler.desktop
