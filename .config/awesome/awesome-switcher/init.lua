@@ -418,7 +418,7 @@ function _M.preview()
 	spacer.draw = function(preview_widget, preview_wbox, cr, width, height) end
 
 	--layout
-	preview_layout = wibox.layout.fixed.horizontal()
+	local preview_layout = wibox.layout.fixed.horizontal()
 
 	preview_layout:add(spacer)
 	for i = 1, #leftRightTab do
