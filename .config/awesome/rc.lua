@@ -64,7 +64,7 @@ naughty.config.defaults['icon_size'] = 100
 
 -- This is used later as the default terminal and editor to run.
 local terminal = "kitty"
-local editor = os.getenv("EDITOR") or "nvim"
+local editor = os.getenv("EDITOR") or "code"
 local editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -73,6 +73,7 @@ local editor_cmd = terminal .. " -e " .. editor
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
 local modkey = "Mod4"
+local altkey = "Mod1"
 
 -- awful.layout.layouts = {
 --     -- awful.layout.suit.floating,
@@ -262,9 +263,9 @@ local globalkeys = gears.table.join(
     awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d@%R:%S-%N).png") end, { description = "Capture window and save it to a file", group = "screenshot" }),
 
     -- Alt+Tab
-    awful.key({ "Mod1" }, "Tab", function() switcher.switch(1, "Mod1", "Alt_L", "Shift", "Tab") end),
+    awful.key({ altkey }, "Tab", function() switcher.switch(1, altkey, "Alt_L", "Shift", "Tab") end),
 
-    awful.key({ "Mod1", "Shift" }, "Tab", function() switcher.switch(-1, "Mod1", "Alt_L", "Shift", "Tab") end),
+    awful.key({ altkey, "Shift" }, "Tab", function() switcher.switch(-1, altkey, "Alt_L", "Shift", "Tab") end),
 
 
     awful.key({ modkey }, "e", function() awful.spawn.with_shell("nemo") end, { description = "Open Nemo" }),
@@ -509,7 +510,21 @@ for i = 1, 3 do
     )
 end
 
+
 root.keys(globalkeys)
+root.buttons(
+    awful.util.table.join(
+        awful.button({ modkey }, 4, function()
+            os.execute("pactl set-sink-volume 0 +2%")
+            volume_widget:refresh()
+        end),
+
+        awful.button({ modkey }, 5, function()
+            os.execute("pactl set-sink-volume 0 -2%")
+            volume_widget:refresh()
+        end)
+    )
+)
 
 local clientbuttons = gears.table.join(
     awful.button({}, 1, function(c) c:emit_signal("request::activate", "mouse_click", { raise = true }) end),

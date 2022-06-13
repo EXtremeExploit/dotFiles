@@ -1,3 +1,3 @@
 function fish_greeting
-neofetch | lolcat
+uwufetch | lolcat
 end

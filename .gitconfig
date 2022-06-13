@@ -5,7 +5,8 @@
 	required = true
 [user]
 	name = EXtremeExploit
-	email = gdextremeexploit@gmail.com
+	email = pedro.montes.alcalde@gmail.com
+	signingKey = C53E9F47AB00AAD3
 [core]
 	editor = code --wait
 #	autocrlf = true

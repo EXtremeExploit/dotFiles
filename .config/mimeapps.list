@@ -1,7 +1,6 @@
 [Added Associations]
 application/vnd.adobe.flash.movie=userapp-ruffle-4A6KM1.desktop;flashplayer-standalone.desktop;
 application/x-bittorrent=org.qbittorrent.qBittorrent.desktop
-application/x-osu-archive=osu-file-extensions-handler.desktop
 application/x-wine-extension-ini=org.kde.kate.desktop
 inode/directory=nemo.desktop
 video/mp4=mpv.desktopvlc.desktop
@@ -13,19 +12,23 @@ x-scheme-handler/tg=userapp-Telegram Desktop-YSJPC1.desktop
 image/jpeg=feh.desktop
 image/png=feh.desktop
 image/gif=mpv.desktop
-x-scheme-handler/osu=osuhandler.desktop
-application/x-osu-beatmap=userapp-kate-5L83F1.desktopcode-oss.desktop
 video/webm=mpv.desktop
 audio/mpeg=deadbeef.desktop;
+application/x-osu-beatmap=userapp-kate-5L83F1.desktopcode-oss.desktop
+application/x-osu-archive=osu-file-extensions-handler.desktop
 application/x-osu-beatmap-archive=osu-file-extensions-handler.desktop;
+application/pdf=libreoffice-draw.desktop;
+image/vnd.microsoft.icon=userapp-feh-L7ZBN1.desktop;feh.desktop;
 
 [Default Applications]
 application/vnd.adobe.flash.movie=flashplayer-standalone.desktop
 application/x-bittorrent=org.qbittorrent.qBittorrent.desktop
 application/x-gnome-saved-search=nemo.desktop
-application/x-osu-archive=osu-file-extensions-handler.desktop
+x-scheme-handler/osu=osu-url-handler.desktop
 application/x-osu-beatmap=userapp-kate-5L83F1.desktop
-x-scheme-handler/osu=osuhandler.desktop
+application/x-osu-beatmap-archive=osu-file-extensions-handler.desktop
+application/x-osu-archive=osu-file-extensions-handler.desktop
+application/x-osu-skin-archive=osu-file-extensions-handler.desktop
 application/x-wine-extension-ini=org.kde.kate.desktop
 inode/directory=nemo.desktop
 chromtext/html=google-chrome.desktop
@@ -50,4 +53,7 @@ x-scheme-handler/discord-424004941485572097=discord-424004941485572097.desktop
 audio/mpeg=deadbeef.desktop
 x-scheme-handler/discord-424928021309554698=discord-424928021309554698.desktop
 x-scheme-handler/discord-712465656758665259=discord-712465656758665259.desktop
-application/x-osu-beatmap-archive=osuhandler.desktop
+application/pdf=libreoffice-draw.desktop
+x-scheme-handler/discord-529050037532098580=discord-529050037532098580.desktop
+image/vnd.microsoft.icon=feh.desktop
+x-scheme-handler/discord-378347429537251328=discord-378347429537251328.desktop
