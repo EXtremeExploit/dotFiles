@@ -72,8 +72,7 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf 
 
 " Automatically save and load folds
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+
 let mapleader = ","
 noremap <leader>w :w<cr>
 noremap <leader>gs :CocSearch

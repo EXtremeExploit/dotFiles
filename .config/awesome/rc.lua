@@ -210,11 +210,13 @@ end)
 local globalkeys = gears.table.join(
     awful.key({ modkey, "Shift" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
     awful.key({ modkey, "Shift" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
-    awful.key({ modkey, "Shift" }, "h", function() mymainmenu:show() end, { description = "show main menu", group = "awesome" }),
+    awful.key({ modkey, "Shift" }, "h", function() mymainmenu:show() end,
+        { description = "show main menu", group = "awesome" }),
     awful.key({ modkey }, "h", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 
     -- Standard program
-    awful.key({ modkey }, "Return", function() awful.spawn(terminal) end, { description = "open a terminal", group = "launcher" }),
+    awful.key({ modkey }, "Return", function() awful.spawn(terminal) end,
+        { description = "open a terminal", group = "launcher" }),
 
     -- Menubar
     awful.key({ modkey }, "r", function() menubar.show() end, { description = "show the menubar", group = "launcher" }),
@@ -234,10 +236,14 @@ local globalkeys = gears.table.join(
         volume_widget:refresh()
     end),
 
-    awful.key({ modkey }, "Escape", function() volume_widget:toggle() end, { description = "Toggle mute volume", group = "media" }),
-    awful.key({ modkey }, "a", function() os.execute("playerctl previous") end, { description = "Previous track", group = "media" }),
-    awful.key({ modkey }, "d", function() os.execute("playerctl next") end, { description = "Next track", group = "media" }),
-    awful.key({ modkey }, "space", function() awful.spawn("playerctl play-pause") end, { description = "Play/Pause track", group = "media" }),
+    awful.key({ modkey }, "Escape", function() volume_widget:toggle() end,
+        { description = "Toggle mute volume", group = "media" }),
+    awful.key({ modkey }, "a", function() os.execute("playerctl previous") end,
+        { description = "Previous track", group = "media" }),
+    awful.key({ modkey }, "d", function() os.execute("playerctl next") end,
+        { description = "Next track", group = "media" }),
+    awful.key({ modkey }, "space", function() awful.spawn("playerctl play-pause") end,
+        { description = "Play/Pause track", group = "media" }),
 
     awful.key({ modkey }, "w", function()
         os.execute("pactl set-sink-volume 0 +2%")
@@ -255,12 +261,23 @@ local globalkeys = gears.table.join(
     -- Super+Control+Shift+S = Region > Clipboard & File
     -- Super+Print = Window > Clipboard
     -- Super+Control+Print = Window > Clipboard & File
-    awful.key({}, "Print", function() awful.spawn.with_shell("maim | xclip -selection clipboard -t image/png") end, { description = "Capture screen", group = "screenshot" }),
-    awful.key({ "Control" }, "Print", function() awful.spawn.with_shell("maim ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png") end, { description = "Capture screen and save it to a file", group = "screenshot" }),
-    awful.key({ modkey, "Shift" }, "s", function() awful.spawn.with_shell("maim -s | xclip -selection clipboard -t image/png") end, { description = "Capture region", group = "screenshot" }),
-    awful.key({ modkey, "Shift", "Control" }, "s", function() awful.spawn.with_shell("maim -s ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d@%R:%S-%N).png") end, { description = "Capture region and save it to a file", group = "screenshot" }),
-    awful.key({ modkey }, "Print", function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png") end, { description = "Capture window", group = "screenshot" }),
-    awful.key({ modkey, "Control" }, "Print", function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d@%R:%S-%N).png") end, { description = "Capture window and save it to a file", group = "screenshot" }),
+    awful.key({}, "Print", function() awful.spawn.with_shell("maim | xclip -selection clipboard -t image/png") end,
+        { description = "Capture screen", group = "screenshot" }),
+    awful.key({ "Control" }, "Print",
+        function() awful.spawn.with_shell("maim ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png") end
+        , { description = "Capture screen and save it to a file", group = "screenshot" }),
+    awful.key({ modkey, "Shift" }, "s",
+        function() awful.spawn.with_shell("maim -s | xclip -selection clipboard -t image/png") end,
+        { description = "Capture region", group = "screenshot" }),
+    awful.key({ modkey, "Shift", "Control" }, "s",
+        function() awful.spawn.with_shell("maim -s ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d@%R:%S-%N).png") end
+        , { description = "Capture region and save it to a file", group = "screenshot" }),
+    awful.key({ modkey }, "Print",
+        function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png") end
+        , { description = "Capture window", group = "screenshot" }),
+    awful.key({ modkey, "Control" }, "Print",
+        function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d@%R:%S-%N).png") end
+        , { description = "Capture window and save it to a file", group = "screenshot" }),
 
     -- Alt+Tab
     awful.key({ altkey }, "Tab", function() switcher.switch(1, altkey, "Alt_L", "Shift", "Tab") end),
@@ -270,7 +287,8 @@ local globalkeys = gears.table.join(
 
     awful.key({ modkey }, "e", function() awful.spawn.with_shell("nemo") end, { description = "Open Nemo" }),
 
-    awful.key({ modkey }, "b", function() awful.spawn.with_shell("/opt/google/chrome/chrome") end, { description = "Open chrome" }),
+    awful.key({ modkey }, "b", function() awful.spawn.with_shell("/opt/google/chrome/chrome") end,
+        { description = "Open chrome" }),
 
     awful.key({ modkey }, "c", function() awful.spawn.with_shell("speedcrunch") end, { description = "Open Calculator" })
 )
@@ -284,9 +302,12 @@ local clientkeys = gears.table.join(
         { description = "toggle fullscreen", group = "client" }),
 
     awful.key({ modkey, "Shift" }, "z", function(c) c:kill() end, { description = "close", group = "client" }),
-    awful.key({ modkey, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end, { description = "move to master", group = "client" }),
-    awful.key({ modkey }, "t", function(c) c.ontop = not c.ontop end, { description = "toggle keep on top", group = "client" }),
-    awful.key({ modkey }, "x", function(c) c.sticky = not c.sticky end, { description = "Toggle Sticky", group = "client" }),
+    awful.key({ modkey, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
+        { description = "move to master", group = "client" }),
+    awful.key({ modkey }, "t", function(c) c.ontop = not c.ontop end,
+        { description = "toggle keep on top", group = "client" }),
+    awful.key({ modkey }, "x", function(c) c.sticky = not c.sticky end,
+        { description = "Toggle Sticky", group = "client" }),
 
     awful.key({ modkey }, "n", function(c) c.minimized = true end, { description = "minimize", group = "client" }),
 
@@ -564,10 +585,23 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "csgo_linux64",
-                "osu!.exe"
+                "osu!.exe",
+                "Terraria.bin.x86_64",
+            },
+            name = {
+                "MTA: San Andreas",
+                "Grand Theft Auto V"
             }
         },
         properties = { tag = "F" }
+    },
+
+    --Minecraft server
+    {
+        rule_any = {
+            name = "Minecraft server"
+        },
+        properties = { tag = "H" }
     }
 }
 -- }}}

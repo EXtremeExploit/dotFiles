@@ -194,6 +194,8 @@ local function worker(user_args)
 
     function volume:refresh()
         spawn.easy_async(GET_VOLUME_CMD, function(stdout) update_graphic(volume.widget, stdout) end)
+        -- Check if volume is odd, if it is then decrement by 1
+        awful.spawn.with_shell("bash ~/.config/awesome/evenVolume.sh");
     end
 
     function volume:mixer()

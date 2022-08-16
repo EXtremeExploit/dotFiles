@@ -19,6 +19,7 @@ application/x-osu-archive=osu-file-extensions-handler.desktop
 application/x-osu-beatmap-archive=osu-file-extensions-handler.desktop;
 application/pdf=libreoffice-draw.desktop;
 image/vnd.microsoft.icon=userapp-feh-L7ZBN1.desktop;feh.desktop;
+application/xml=micro.desktop;
 
 [Default Applications]
 application/vnd.adobe.flash.movie=flashplayer-standalone.desktop
@@ -57,3 +58,4 @@ application/pdf=libreoffice-draw.desktop
 x-scheme-handler/discord-529050037532098580=discord-529050037532098580.desktop
 image/vnd.microsoft.icon=feh.desktop
 x-scheme-handler/discord-378347429537251328=discord-378347429537251328.desktop
+application/xml=micro.desktop

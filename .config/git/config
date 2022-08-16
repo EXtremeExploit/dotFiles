@@ -6,7 +6,7 @@
 [user]
 	name = EXtremeExploit
 	email = pedro.montes.alcalde@gmail.com
-	signingKey = C53E9F47AB00AAD3
+	signingKey = F1FE6049736B4DE3
 [core]
 	editor = code --wait
 #	autocrlf = true
