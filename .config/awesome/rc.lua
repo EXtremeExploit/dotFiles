@@ -94,7 +94,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- {{{ Wibar
 -- Create a textclock widget
-local mytextclock = wibox.widget.textclock("%A-%B (UTC-3) / %Y-%m-%d %T", 1)
+local mytextclock = wibox.widget.textclock(" %A-%B (UTC-3) / %Y-%m-%d %T", 1)
 mytextclock:connect_signal("button::press", function(_, _, _, button)
     if button == 1 then cw.toggle() end
 end)
