@@ -21,7 +21,7 @@ local xresources = require("beautiful.xresources")
 local switcher = require("awesome-switcher")
 
 local volume_widget = require("volume-widget.volume")
-
+local battery_widget = require("battery-widget.battery")
 local calendar_widget = require("calendar-widget.calendar")
 -- or customized
 local cw = calendar_widget({
@@ -94,7 +94,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- {{{ Wibar
 -- Create a textclock widget
-local mytextclock = wibox.widget.textclock("%% %A-%B (UTC-3) / %Y-%m-%d %T", 1)
+local mytextclock = wibox.widget.textclock("%A-%B (UTC-3) / %Y-%m-%d %T", 1)
 mytextclock:connect_signal("button::press", function(_, _, _, button)
     if button == 1 then cw.toggle() end
 end)
@@ -200,6 +200,9 @@ awful.screen.connect_for_each_screen(function(s)
                 mixer_cmd = "",
                 icon_dir = "",
             },
+            battery_widget({
+                show_current_level = true
+            }),
             mytextclock,
         },
     }

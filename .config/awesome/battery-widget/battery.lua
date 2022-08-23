@@ -20,7 +20,7 @@ local dpi = require('beautiful').xresources.apply_dpi
 -- Battery 0: Charging, 53%, 00:57:43 until charged
 
 local HOME = os.getenv("HOME")
-local WIDGET_DIR = HOME .. '/.config/awesome/awesome-wm-widgets/battery-widget'
+local WIDGET_DIR = HOME .. '/.config/awesome/battery-widget'
 
 local battery_widget = {}
 local function worker(user_args)
@@ -60,7 +60,7 @@ local function worker(user_args)
             widget = wibox.widget.imagebox,
             resize = false
         },
-        valigh = 'center',
+        valign = 'center',
         layout = wibox.container.place,
     }
     local level_widget = wibox.widget {
@@ -125,7 +125,7 @@ local function worker(user_args)
         local battery_info = {}
         local capacities = {}
         for s in stdout:gmatch("[^\r\n]+") do
-            local status, charge_str, _ = string.match(s, '.+: (%a+), (%d?%d?%d)%%,?(.*)')
+            local status, charge_str, _ = string.match(s, '.+: ([%a%s]+), (%d?%d?%d)%%,?(.*)')
             if status ~= nil then
                 table.insert(battery_info, {status = status, charge = tonumber(charge_str)})
             else
@@ -157,7 +157,7 @@ local function worker(user_args)
             level_widget.text = string.format('%d%%', charge)
         end
 
-        if (charge >= 0 and charge < 15) then
+        if (charge >= 1 and charge < 15) then
             batteryType = "battery-empty%s-symbolic"
             if enable_battery_warning and status ~= 'Charging' and os.difftime(os.time(), last_battery_check) > 300 then
                 -- if 5 minutes have elapsed since the last warning
