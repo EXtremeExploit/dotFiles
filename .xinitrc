@@ -11,14 +11,10 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
     unset f
 fi
 
-xrandr
-
 xset r rate 250 45
 setxkbmap -layout "latam"
 xset -dpms
 xset s off
-
-xrdb -merge ~/.Xresources
 
 xmousepasteblock &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
