@@ -78,10 +78,10 @@
           "Rotation": 0.0
         },
         "Tablet": {
-          "Width": 70.0,
-          "Height": 39.375,
-          "X": 107.0,
-          "Y": 35.0,
+          "Width": 86.0,
+          "Height": 48.375,
+          "X": 43.0,
+          "Y": 43.0,
           "Rotation": 270.0
         },
         "EnableClipping": false,
