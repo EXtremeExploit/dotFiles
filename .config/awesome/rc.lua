@@ -17,7 +17,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
-local xresources = require("beautiful.xresources")
 local switcher = require("awesome-switcher")
 
 local volume_widget = require("volume-widget.volume")
@@ -29,8 +28,6 @@ local cw = calendar_widget({
     placement = "bottom_right",
     radius = 5,
 })
-
-
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -60,7 +57,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("~/.config/awesome/theme.lua")
-naughty.config.defaults['icon_size'] = 100
+naughty.config.defaults['icon_size'] = 128
 
 -- This is used later as the default terminal and editor to run.
 local terminal = "kitty"
@@ -74,11 +71,6 @@ local editor_cmd = terminal .. " -e " .. editor
 -- However, you can use another modifier like Mod1, but it may interact with others.
 local modkey = "Mod4"
 local altkey = "Mod1"
-
--- awful.layout.layouts = {
---     -- awful.layout.suit.floating,
--- }
--- }}}
 
 local mymainmenu = awful.menu({
     items = {
@@ -113,8 +105,12 @@ local taglist_buttons = gears.table.join(
             client.focus:toggle_tag(t)
         end
     end),
-    awful.button({}, 4, function(t) awful.tag.viewnext(t.screen) end),
-    awful.button({}, 5, function(t) awful.tag.viewprev(t.screen) end)
+    awful.button({}, 4, function(t) os.execute("pactl set-sink-volume 0 +2%")
+        volume_widget:refresh()
+    end),
+    awful.button({}, 5, function(t) os.execute("pactl set-sink-volume 0 -2%")
+        volume_widget:refresh()
+    end)
 )
 
 local tasklist_buttons = gears.table.join(
@@ -195,11 +191,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-            volume_widget {
-                widget_type = "icon_and_text",
-                mixer_cmd = "",
-                icon_dir = "",
-            },
+            volume_widget {},
             battery_widget({
                 show_current_level = true
             }),
@@ -290,7 +282,7 @@ local globalkeys = gears.table.join(
 
     awful.key({ modkey }, "e", function() awful.spawn.with_shell("nemo") end, { description = "Open Nemo" }),
 
-    awful.key({ modkey }, "b", function() awful.spawn.with_shell("/opt/google/chrome/chrome") end,
+    awful.key({ modkey }, "b", function() awful.spawn.with_shell("google-chrome-stable") end,
         { description = "Open chrome" }),
 
     awful.key({ modkey }, "c", function() awful.spawn.with_shell("speedcrunch") end, { description = "Open Calculator" })
