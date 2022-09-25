@@ -81,8 +81,8 @@
           "Width": 86.0,
           "Height": 48.375,
           "X": 43.0,
-          "Y": 43.0,
-          "Rotation": 270.0
+          "Y": 70.8125,
+          "Rotation": 180.0
         },
         "EnableClipping": false,
         "EnableAreaLimiting": false,
