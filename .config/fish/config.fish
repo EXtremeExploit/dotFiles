@@ -21,7 +21,6 @@ if test -z (pgrep ssh-agent | string collect)
   set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
 end
 
-set -x PICO_SDK_PATH ~/Documentos/pico-sdk
 set -x QT_QPA_PLATFORMTHEME qt5ct
 set -x WINEDLLOVERRIDES winemenubuilder.exe=d
 
