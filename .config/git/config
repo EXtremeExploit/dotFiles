@@ -6,7 +6,7 @@
 [user]
 	name = EXtremeExploit
 	email = pedro.montes.alcalde@gmail.com
-	signingKey = F1FE6049736B4DE3
+	signingKey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDfGaGgfPE9nuZKF9neaGIHYopPducxqfsFxuBbgoAWFcYt2TmYhxemRzICxsc7FZ4BJrTREz/6kz9zCoTSsxN6VHDPGdSJXxEF1wNhrogkDG/bF1tIdxuC9Vk9WVqlqourwjPhDu5isyBD5M0kVvOuVhZgutdHGGrZG3MoBEyepz6K/brB2jJuCzwO0zCAtPT1gSr+WLSwPtmLLSuoaCI2VJEC9glIugeOxj7aLk9C1sNZQO+Rahe7yOCcNp1zz/Pvt9SCuZ3/R6WK1W2kfbA2Hj7wAnnCbPMbamTnhkBayQxdgv/GsK1c262mm3zmSMMLx3ClBJG76nFkLEIoBw4wEAqrXFAvnH7Jc6Ov4uPC0mj5RulvBs1/lAoDa4BNbXkP6UsI/6qfKPqEpmEkqojBZ+gc0eBN9rAOInL8E2cWrY9IbObJJjEpwH9ZLqeDvsDr+cxj+tyYNOZmA+VnRK8u5jb6js25Y0oRsDL2NL4cSDr1HKluZnZbbqlBp5+FNfs= pedro@pedro-arch
 [core]
 	editor = code --wait
 #	autocrlf = true
@@ -15,3 +15,5 @@
 	canFallBackToInsecureStore = true
 [init]
 	defaultBranch = master
+[gpg]
+	format = ssh
