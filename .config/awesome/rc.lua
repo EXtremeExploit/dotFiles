@@ -581,7 +581,8 @@ awful.rules.rules = {
             class = {
                 "csgo_linux64",
                 "osu!.exe",
-                "Terraria.bin.x86_64",
+                "osu!",
+                "Terraria.bin.x86_64"
             },
             name = {
                 "MTA: San Andreas",
