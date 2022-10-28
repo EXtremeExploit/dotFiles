@@ -30,4 +30,5 @@ set -x XINITRC $XDG_CONFIG_HOME/X11/xinitrc
 
 set -x XMODIFIERS @im=xim
 
+fish_add_path /home/pedro/.spicetify
 starship init fish | source

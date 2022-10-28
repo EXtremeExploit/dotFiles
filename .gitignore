@@ -2,7 +2,6 @@
 !.config/awesome/*
 !.config/fish/config.fish
 !.config/fish/functions/*
-!.config/SpeedCrunch/SpeedCrunch.ini
 !.config/btop/btop.conf
 !.config/git/*
 

@@ -261,12 +261,14 @@ local globalkeys = gears.table.join(
     awful.key({ "Control" }, "Print",
         function() awful.spawn.with_shell("maim ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png") end
         , { description = "Capture screen and save it to a file", group = "screenshot" }),
+    -- REGION
     awful.key({ modkey, "Shift" }, "s",
-        function() awful.spawn.with_shell("maim -s | xclip -selection clipboard -t image/png") end,
+        function() awful.spawn.with_shell("bash ~/.config/awesome/maimhandler.sh clipboard") end,
         { description = "Capture region", group = "screenshot" }),
     awful.key({ modkey, "Shift", "Control" }, "s",
-        function() awful.spawn.with_shell("maim -s ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d@%R:%S-%N).png") end
+        function() awful.spawn.with_shell("bash ~/.config/awesome/maimhandler.sh file") end
         , { description = "Capture region and save it to a file", group = "screenshot" }),
+    -- WINDOW
     awful.key({ modkey }, "Print",
         function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png") end
         , { description = "Capture window", group = "screenshot" }),

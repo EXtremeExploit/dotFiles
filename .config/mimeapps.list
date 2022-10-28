@@ -21,6 +21,7 @@ application/pdf=libreoffice-draw.desktop;
 image/vnd.microsoft.icon=userapp-feh-L7ZBN1.desktop;feh.desktop;
 application/xml=micro.desktop;
 audio/x-wav=userapp-audacity-DKJOS1.desktop;mpv.desktop;
+application/x-osu-replay=osu-file-extensions-handler.desktop;
 
 [Default Applications]
 application/vnd.adobe.flash.movie=flashplayer-standalone.desktop
@@ -61,3 +62,4 @@ image/vnd.microsoft.icon=feh.desktop
 x-scheme-handler/discord-378347429537251328=discord-378347429537251328.desktop
 application/xml=micro.desktop
 audio/x-wav=mpv.desktop
+application/x-osu-replay=osu-file-extensions-handler.desktop

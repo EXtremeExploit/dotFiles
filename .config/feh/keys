@@ -5,8 +5,6 @@ reload_plus
 reload_minus
 render
 toggle_aliasing
-draw_actions
-
 
 # Image info
 toggle_info i
@@ -23,8 +21,8 @@ next_img Right
 prev_img Left
 
 # Zoom
-zoom_in "+"
-zoom_out "-"
+zoom_in plus
+zoom_out minus
 zoom_fit z
 zoom_default r
 
