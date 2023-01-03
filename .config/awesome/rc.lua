@@ -478,6 +478,33 @@ local clientkeys = gears.table.join(
     end, { description = "Snap Down", group = "layout" })
 )
 
+
+local gameKeys = gears.table.join(
+    awful.key({ modkey }, "f",
+        function(c)
+            c.fullscreen = not c.fullscreen
+            c:raise()
+        end,
+        { description = "toggle fullscreen", group = "client" }),
+
+    awful.key({ modkey, "Shift" }, "z", function(c) c:kill() end, { description = "close", group = "client" }),
+    awful.key({ modkey, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
+        { description = "move to master", group = "client" }),
+    awful.key({ modkey }, "t", function(c) c.ontop = not c.ontop end,
+        { description = "toggle keep on top", group = "client" }),
+    awful.key({ modkey }, "x", function(c) c.sticky = not c.sticky end,
+        { description = "Toggle Sticky", group = "client" }),
+
+    awful.key({ modkey }, "n", function(c) c.minimized = true end, { description = "minimize", group = "client" }),
+
+    awful.key({ modkey }, "m",
+        function(c)
+            c.maximized = not c.maximized
+            c:raise()
+        end,
+        { description = "(un)maximize", group = "client" })
+)
+
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
@@ -584,14 +611,15 @@ awful.rules.rules = {
                 "csgo_linux64",
                 "osu!.exe",
                 "osu!",
-                "Terraria.bin.x86_64"
+                "Terraria.bin.x86_64",
+                "portal2_linux"
             },
             name = {
                 "MTA: San Andreas",
                 "Grand Theft Auto V"
             }
         },
-        properties = { tag = "F" }
+        properties = { tag = "F", keys = gameKeys }
     },
 
     --Minecraft server
