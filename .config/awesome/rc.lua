@@ -609,6 +609,7 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "csgo_linux64",
+                "hl2_linux",
                 "osu!.exe",
                 "osu!",
                 "Terraria.bin.x86_64",
