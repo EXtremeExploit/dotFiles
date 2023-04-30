@@ -17,3 +17,5 @@
 	defaultBranch = master
 [gpg]
 	format = ssh
+[protocol "file"]
+	allow = always
