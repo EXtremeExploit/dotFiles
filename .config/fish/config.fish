@@ -32,3 +32,10 @@ set -x XMODIFIERS @im=xim
 
 fish_add_path /home/pedro/.spicetify
 starship init fish | source
+
+# pnpm
+set -gx PNPM_HOME "/home/pedro/.local/share/pnpm"
+set -gx PATH "$PNPM_HOME" $PATH
+set -gx PATH "$HOME/.local/bin" $PATH
+
+# pnpm end
