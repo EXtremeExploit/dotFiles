@@ -112,6 +112,11 @@
           "Path": "Circular_Area.Circular_Tapered4_Mapping_Inverse",
           "Settings": [],
           "Enable": false
+        },
+        {
+          "Path": "Circular_Area.Circular_Squelched_Grid_Open_Mapping_Inverse",
+          "Settings": [],
+          "Enable": false
         }
       ],
       "AbsoluteModeSettings": {
@@ -123,10 +128,10 @@
           "Rotation": 0.0
         },
         "Tablet": {
-          "Width": 79.0,
-          "Height": 44.4375,
-          "X": 39.500004,
-          "Y": 72.78125,
+          "Width": 70.0,
+          "Height": 39.375,
+          "X": 35.000004,
+          "Y": 75.31249,
           "Rotation": 180.0
         },
         "EnableClipping": false,
