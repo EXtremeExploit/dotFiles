@@ -613,7 +613,10 @@ awful.rules.rules = {
                 "osu!.exe",
                 "osu!",
                 "Terraria.bin.x86_64",
-                "portal2_linux"
+                "portal2_linux",
+                "Pinball FX3.exe",
+                "Pinball FX.exe",
+                "SlimeRancher.x86_64",
             },
             name = {
                 "MTA: San Andreas",
