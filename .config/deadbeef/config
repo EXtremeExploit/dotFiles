@@ -62,7 +62,7 @@ gtkui.override_bar_colors 1
 gtkui.override_tabstrip_colors 0
 gtkui.playlist.group_by_tf %album artist% - ['['$year(%date%)']' ]%album%
 gtkui.search.group_by_tf 
-gtkui.show_menu 0
+gtkui.show_menu 1
 gtkui.start_hidden 0
 gtkui.statusbar.visible 1
 gtkui.statusbar_seltime 1
@@ -176,14 +176,14 @@ output_plugin pulseaudio
 playback.loop 1
 playback.volume -29.78722
 playback.volume.normalized 1.0000000
-playlist.current 0
-playlist.cursor.0 67
+playlist.current 1
+playlist.cursor.0 33
 playlist.cursor.1 0
 playlist.cursor.2 0
 playlist.cursor.3 0
 playlist.cursor.4 0
 playlist.pin.groups 1
-playlist.scroll.0 -67
+playlist.scroll.0 -33
 playlist.scroll.1 0
 playlist.scroll.2 0
 playlist.scroll.3 0
@@ -197,9 +197,9 @@ prefwin.geometry.x 572
 prefwin.geometry.y 164
 replaygain.source_mode 2
 resume.paused 0
-resume.playlist 0
-resume.position 12.167272
-resume.track 117
+resume.playlist 1
+resume.position 17.972307
+resume.track 0
 resume_last_session 0
 streamer.16_to_24 0
 streamer.8_to_16 0

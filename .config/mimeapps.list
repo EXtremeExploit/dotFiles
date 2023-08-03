@@ -23,6 +23,7 @@ application/xml=micro.desktop;
 audio/x-wav=userapp-audacity-DKJOS1.desktop;mpv.desktop;
 application/x-osu-replay=osu-file-extensions-handler.desktop;
 audio/flac=mpv.desktop;
+application/vnd.ms-htmlhelp=okularApplication_chm.desktop;
 
 [Default Applications]
 application/vnd.adobe.flash.movie=flashplayer-standalone.desktop
@@ -66,3 +67,7 @@ audio/x-wav=mpv.desktop
 application/x-osu-replay=osu-file-extensions-handler.desktop
 x-scheme-handler/flashpoint=flashpoint-launcher.desktop
 audio/flac=mpv.desktop
+x-scheme-handler/discord-460807638964371468=discord-460807638964371468.desktop
+x-scheme-handler/discord-494211635834257419=discord-494211635834257419.desktop
+x-scheme-handler/discord-443564201349218305=discord-443564201349218305.desktop
+application/vnd.ms-htmlhelp=okularApplication_chm.desktop
