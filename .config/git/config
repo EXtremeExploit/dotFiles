@@ -19,3 +19,5 @@
 	format = ssh
 [protocol "file"]
 	allow = always
+[gpg "ssh"]
+	allowedSignersFile = /home/pedro/.config/git/allowed_signers
