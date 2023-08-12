@@ -557,19 +557,6 @@ end
 
 
 root.keys(globalkeys)
-root.buttons(
-    awful.util.table.join(
-        awful.button({ modkey }, 4, function()
-            os.execute("pactl set-sink-volume 0 +2%")
-            volume_widget:refresh()
-        end),
-
-        awful.button({ modkey }, 5, function()
-            os.execute("pactl set-sink-volume 0 -2%")
-            volume_widget:refresh()
-        end)
-    )
-)
 
 local clientbuttons = gears.table.join(
     awful.button({}, 1, function(c) c:emit_signal("request::activate", "mouse_click", { raise = true }) end),
@@ -656,7 +643,7 @@ end)
 switcher.settings.preview_box = true -- display preview-box
 switcher.settings.preview_box_bg = "#000000ff" -- background color
 switcher.settings.preview_box_border = "#aaaaaa00" -- border-color
-switcher.settings.preview_box_fps = 60 -- refresh framerate
+switcher.settings.preview_box_fps = 240 -- refresh framerate
 switcher.settings.preview_box_delay = 50 -- delay in ms
 switcher.settings.preview_box_title_font = { "sans", "italic", "normal" } -- the font for cairo
 switcher.settings.preview_box_title_font_size_factor = 0.8 -- the font sizing factor

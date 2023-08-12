@@ -30,9 +30,13 @@ local function worker()
     volume.widget = widget_types['icon_and_text'].get_widget()
 
     local function update_graphic(widget, stdout)
-        local volume_level = string.match(stdout, "(%d?%d?%d)%%") -- (\d?\d?\d)\%)
-        volume_level = string.format("% 3d%% ", volume_level)
-        widget:set_volume_level(volume_level)
+        local volume_level, status = string.match(stdout, "%[(%d+)%%]% %[(%w+)]");
+        if status == 'off' then
+            volume_level = string.format("% 3dM ", volume_level)
+        else
+            volume_level = string.format("% 3d%% ", volume_level)
+        end
+        widget:setInnerText(volume_level)
     end
 
     function volume:inc()
@@ -44,9 +48,9 @@ local function worker()
     end
 
     function volume:refresh()
-        spawn.easy_async(GET_VOLUME_CMD, function(stdout) update_graphic(volume.widget, stdout) end)
         -- Check if volume is odd, if it is then decrement by 1
         awful.spawn.with_shell("bash ~/.config/awesome/evenVolume.sh");
+        spawn.easy_async(GET_VOLUME_CMD, function(stdout) update_graphic(volume.widget, stdout) end)
     end
 
     function volume:toggle()
