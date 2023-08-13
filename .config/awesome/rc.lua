@@ -33,9 +33,11 @@ local cw = calendar_widget({
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
+    naughty.notify({
+        preset = naughty.config.presets.critical,
         title = "Oops, there were errors during startup!",
-        text = awesome.startup_errors })
+        text = awesome.startup_errors
+    })
 end
 
 -- Handle runtime errors after startup
@@ -46,9 +48,11 @@ do
         if in_error then return end
         in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
+        naughty.notify({
+            preset = naughty.config.presets.critical,
             title = "Oops, an error happened!",
-            text = tostring(err) })
+            text = tostring(err)
+        })
         in_error = false
     end)
 end
@@ -64,6 +68,8 @@ local terminal = "kitty"
 local editor = os.getenv("EDITOR") or "code"
 local editor_cmd = terminal .. " -e " .. editor
 
+local tags = { "M", "H", "F" };
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -74,11 +80,11 @@ local altkey = "Mod1"
 
 local mymainmenu = awful.menu({
     items = {
-        { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-        { "edit config", editor_cmd .. " .config/awesome/" },
+        { "hotkeys",       function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+        { "edit config",   editor_cmd .. " .config/awesome/" },
         { "open terminal", terminal },
-        { "restart", awesome.restart },
-        { "quit", function() awesome.quit() end },
+        { "restart",       awesome.restart },
+        { "quit",          function() awesome.quit() end },
     }
 })
 
@@ -86,7 +92,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- {{{ Wibar
 -- Create a textclock widget
-local mytextclock = wibox.widget.textclock(" %A-%B (UTC-3) / %Y-%m-%d %T", 1)
+local mytextclock = wibox.widget.textclock("%A-%B (UTC-3) / %Y-%m-%d %T", 1)
 mytextclock:connect_signal("button::press", function(_, _, _, button)
     if button == 1 then cw.toggle() end
 end)
@@ -105,11 +111,11 @@ local taglist_buttons = gears.table.join(
             client.focus:toggle_tag(t)
         end
     end),
-    awful.button({}, 4, function(t) os.execute("pactl set-sink-volume 0 +2%")
-        volume_widget:refresh()
+    awful.button({}, 4, function(t)
+        volume_widget:inc()
     end),
-    awful.button({}, 5, function(t) os.execute("pactl set-sink-volume 0 -2%")
-        volume_widget:refresh()
+    awful.button({}, 5, function(t)
+        volume_widget:dec()
     end)
 )
 
@@ -127,18 +133,9 @@ local tasklist_buttons = gears.table.join(
     end),
 
     awful.button({}, 2, function(c) os.execute("playerctl play-pause") end),
-
     awful.button({ modkey }, 2, function(c) volume_widget:toggle() end),
-
-    awful.button({}, 4, function()
-        os.execute("pactl set-sink-volume 0 +2%")
-        volume_widget:refresh()
-    end),
-
-    awful.button({}, 5, function()
-        os.execute("pactl set-sink-volume 0 -2%")
-        volume_widget:refresh()
-    end))
+    awful.button({}, 4, function() volume_widget:inc() end),
+    awful.button({}, 5, function() volume_widget:dec() end))
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -160,7 +157,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "M", "H", "F" }, s, awful.layout.layouts[1])
+    awful.tag(tags, s, awful.layout.layouts[1])
 
     -- Create an imagebox widget which will contain an icon indicating which layout we"re using.
     -- Create a taglist widget
@@ -188,7 +185,7 @@ awful.screen.connect_for_each_screen(function(s)
             s.mytaglist,
         },
         s.mytasklist, -- Middle widget
-        { -- Right widgets
+        {             -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             volume_widget {},
@@ -221,18 +218,15 @@ local globalkeys = gears.table.join(
     awful.key({}, "XF86AudioPlay", function() os.execute("playerctl play-pause") end),
     awful.key({}, "XF86AudioPrev", function() os.execute("playerctl previous") end),
     awful.key({}, "XF86AudioNext", function() os.execute("playerctl next") end),
-
     awful.key({}, "XF86AudioRaiseVolume", function()
-        os.execute("pactl set-sink-volume 0 +2%")
-        volume_widget:refresh()
+        volume_widget:inc()
     end),
     awful.key({}, "XF86AudioLowerVolume", function()
-        os.execute("pactl set-sink-volume 0 -2%")
-        volume_widget:refresh()
+        volume_widget:dec()
     end),
 
     awful.key({ modkey }, "Escape", function() volume_widget:toggle() end,
-        { description = "Toggle mute volume", group = "media" }),
+        { description = "Toggle playback mute", group = "media" }),
     awful.key({ modkey }, "a", function() os.execute("playerctl previous") end,
         { description = "Previous track", group = "media" }),
     awful.key({ modkey }, "d", function() os.execute("playerctl next") end,
@@ -241,12 +235,10 @@ local globalkeys = gears.table.join(
         { description = "Play/Pause track", group = "media" }),
 
     awful.key({ modkey }, "w", function()
-        os.execute("pactl set-sink-volume 0 +2%")
-        volume_widget:refresh()
+        volume_widget:inc()
     end, { description = "Increment volume", group = "media" }),
     awful.key({ modkey }, "s", function()
-        os.execute("pactl set-sink-volume 0 -2%")
-        volume_widget:refresh()
+        volume_widget:dec()
     end, { description = "Decrease volume", group = "media" }),
 
     -- Screenshotting
@@ -259,7 +251,10 @@ local globalkeys = gears.table.join(
     awful.key({}, "Print", function() awful.spawn.with_shell("maim | xclip -selection clipboard -t image/png") end,
         { description = "Capture screen", group = "screenshot" }),
     awful.key({ "Control" }, "Print",
-        function() awful.spawn.with_shell("maim ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png") end
+        function()
+            awful.spawn.with_shell(
+                "maim ~/$(date +%Y-%m-%d-%R-%S-%N).png | xclip -selection clipboard -t image/png")
+        end
         , { description = "Capture screen and save it to a file", group = "screenshot" }),
     -- REGION
     awful.key({ modkey, "Shift" }, "s",
@@ -273,20 +268,18 @@ local globalkeys = gears.table.join(
         function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png") end
         , { description = "Capture window", group = "screenshot" }),
     awful.key({ modkey, "Control" }, "Print",
-        function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d@%R:%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d@%R:%S-%N).png") end
+        function()
+            awful.spawn.with_shell(
+                "maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d-%R-%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d-%R-%S-%N).png")
+        end
         , { description = "Capture window and save it to a file", group = "screenshot" }),
 
     -- Alt+Tab
     awful.key({ altkey }, "Tab", function() switcher.switch(1, altkey, "Alt_L", "Shift", "Tab") end),
-
     awful.key({ altkey, "Shift" }, "Tab", function() switcher.switch(-1, altkey, "Alt_L", "Shift", "Tab") end),
-
-
     awful.key({ modkey }, "e", function() awful.spawn.with_shell("nemo") end, { description = "Open Nemo" }),
-
     awful.key({ modkey }, "b", function() awful.spawn.with_shell("google-chrome-stable") end,
         { description = "Open chrome" }),
-
     awful.key({ modkey }, "c", function() awful.spawn.with_shell("speedcrunch") end, { description = "Open Calculator" })
 )
 
@@ -297,7 +290,6 @@ local clientkeys = gears.table.join(
             c:raise()
         end,
         { description = "toggle fullscreen", group = "client" }),
-
     awful.key({ modkey, "Shift" }, "z", function(c) c:kill() end, { description = "close", group = "client" }),
     awful.key({ modkey, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
         { description = "move to master", group = "client" }),
@@ -305,9 +297,7 @@ local clientkeys = gears.table.join(
         { description = "toggle keep on top", group = "client" }),
     awful.key({ modkey }, "x", function(c) c.sticky = not c.sticky end,
         { description = "Toggle Sticky", group = "client" }),
-
     awful.key({ modkey }, "n", function(c) c.minimized = true end, { description = "minimize", group = "client" }),
-
     awful.key({ modkey }, "m",
         function(c)
             c.maximized = not c.maximized
@@ -486,7 +476,6 @@ local gameKeys = gears.table.join(
             c:raise()
         end,
         { description = "toggle fullscreen", group = "client" }),
-
     awful.key({ modkey, "Shift" }, "z", function(c) c:kill() end, { description = "close", group = "client" }),
     awful.key({ modkey, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
         { description = "move to master", group = "client" }),
@@ -494,9 +483,7 @@ local gameKeys = gears.table.join(
         { description = "toggle keep on top", group = "client" }),
     awful.key({ modkey }, "x", function(c) c.sticky = not c.sticky end,
         { description = "Toggle Sticky", group = "client" }),
-
     awful.key({ modkey }, "n", function(c) c.minimized = true end, { description = "minimize", group = "client" }),
-
     awful.key({ modkey }, "m",
         function(c)
             c.maximized = not c.maximized
@@ -508,7 +495,7 @@ local gameKeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 3 do
+for i = 1, #tags do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
@@ -640,19 +627,22 @@ end)
 
 -- }}}
 
-switcher.settings.preview_box = true -- display preview-box
-switcher.settings.preview_box_bg = "#000000ff" -- background color
-switcher.settings.preview_box_border = "#aaaaaa00" -- border-color
-switcher.settings.preview_box_fps = 240 -- refresh framerate
-switcher.settings.preview_box_delay = 50 -- delay in ms
+switcher.settings.preview_box = true                                      -- display preview-box
+switcher.settings.preview_box_bg = "#000000ff"                            -- background color
+switcher.settings.preview_box_border = "#aaaaaa00"                        -- border-color
+switcher.settings.preview_box_fps = 240                                   -- refresh framerate
+switcher.settings.preview_box_delay = 50                                  -- delay in ms
 switcher.settings.preview_box_title_font = { "sans", "italic", "normal" } -- the font for cairo
-switcher.settings.preview_box_title_font_size_factor = 0.8 -- the font sizing factor
-switcher.settings.preview_box_title_color = { 255, 255, 255, 1 } -- the font color
+switcher.settings.preview_box_title_font_size_factor = 0.8                -- the font sizing factor
+switcher.settings.preview_box_title_color = { 255, 255, 255, 1 }          -- the font color
 
-switcher.settings.client_opacity = false -- opacity for unselected clients
-switcher.settings.client_opacity_value = 0.5 -- alpha-value for any client
-switcher.settings.client_opacity_value_in_focus = 0.5 -- alpha-value for the client currently in focus
-switcher.settings.client_opacity_value_selected = 1 -- alpha-value for the selected client
+switcher.settings.client_opacity = false                                  -- opacity for unselected clients
+switcher.settings.client_opacity_value = 0.5                              -- alpha-value for any client
+switcher.settings.client_opacity_value_in_focus = 0.5                     -- alpha-value for the client currently in focus
+switcher.settings.client_opacity_value_selected = 1                       -- alpha-value for the selected client
 
-switcher.settings.cycle_raise_client = false -- raise clients on cycle
-gears.timer.start_new(10, function() collectgarbage("step", 100000) return true end)
+switcher.settings.cycle_raise_client = false                              -- raise clients on cycle
+gears.timer.start_new(10, function()
+    collectgarbage("step", 100000)
+    return true
+end)
