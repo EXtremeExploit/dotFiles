@@ -591,6 +591,7 @@ awful.rules.rules = {
                 "Pinball FX3.exe",
                 "Pinball FX.exe",
                 "SlimeRancher.x86_64",
+                "warfork.x86_64"
             },
             name = {
                 "MTA: San Andreas",
@@ -646,3 +647,6 @@ gears.timer.start_new(10, function()
     collectgarbage("step", 100000)
     return true
 end)
+
+awful.spawn.with_shell("bash -c \"pgrep aw-qt || aw-qt\"")
+awful.spawn.with_shell("bash -c \"pgrep whatpulse || whatpulse\"")
