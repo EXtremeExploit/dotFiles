@@ -7,7 +7,7 @@ function maimSelectionClipboard() {
 }
 
 function maimSelectionClipboardFile() {
-	local date=$(date +%Y-%m-%d@%R:%S-%N)
+	local date=$(date +%Y-%m-%d-%R-%S-%N)
 	maim -s ~/$date.png && xclip -selection clipboard -t image/png ~/$date.png
 }
 
