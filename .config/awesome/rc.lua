@@ -78,6 +78,15 @@ local tags = { "M", "H", "F" };
 local modkey = "Mod4"
 local altkey = "Mod1"
 
+
+local function file_exists(name)
+    local f = io.open(name, "r")
+    if f ~= nil then
+        io.close(f)
+        return true
+    else return false end
+end
+
 local mymainmenu = awful.menu({
     items = {
         { "hotkeys",       function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
@@ -280,7 +289,33 @@ local globalkeys = gears.table.join(
     awful.key({ modkey }, "e", function() awful.spawn.with_shell("nemo") end, { description = "Open Nemo" }),
     awful.key({ modkey }, "b", function() awful.spawn.with_shell("google-chrome-stable") end,
         { description = "Open chrome" }),
-    awful.key({ modkey }, "c", function() awful.spawn.with_shell("speedcrunch") end, { description = "Open Calculator" })
+    awful.key({ modkey }, "c", function() awful.spawn.with_shell("speedcrunch") end, { description = "Open Calculator" }),
+
+
+    -- Hidden
+    awful.key({ modkey, altkey }, "r",
+        function()
+            local filename = os.date(os.getenv("HOME").."/replay %Y-%m-%d-%H-%M-%S.mkv");
+            naughty.notify({
+                preset = naughty.config.presets.normal,
+                title = "Replay buffer",
+                text = "Saving replay buffer...\n" .. filename,
+                timeout = 3
+            });
+            gears.timer.start_new(1, function()
+                if file_exists(filename) then
+                    naughty.notify({
+                        preset = naughty.config.presets.normal,
+                        title = "Replay buffer",
+                        text = "Replay buffer saved :D",
+                        timeout = 3
+                    });
+                    return false;
+                end
+                return true;
+            end)
+        end
+    )
 )
 
 local clientkeys = gears.table.join(
