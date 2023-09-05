@@ -84,7 +84,9 @@ local function file_exists(name)
     if f ~= nil then
         io.close(f)
         return true
-    else return false end
+    else
+        return false
+    end
 end
 
 local mymainmenu = awful.menu({
@@ -295,25 +297,31 @@ local globalkeys = gears.table.join(
     -- Hidden
     awful.key({ modkey, altkey }, "r",
         function()
-            local filename = os.date(os.getenv("HOME").."/replay %Y-%m-%d-%H-%M-%S.mkv");
+            -- Check for an +/-1 offset of the current date because sometimes the timing with obs and this code is not the same
+            local currDate = os.time() + 1; -- idk why -1 but it makes the thing work :p
+            local filename0 = os.date(os.getenv("HOME") .. "/replay %Y-%m-%d-%H-%M-%S.mkv", currDate);
+            local filenamem1 = os.date(os.getenv("HOME") .. "/replay %Y-%m-%d-%H-%M-%S.mkv", currDate - 1);
+            local filename1 = os.date(os.getenv("HOME") .. "/replay %Y-%m-%d-%H-%M-%S.mkv", currDate + 1);
             naughty.notify({
                 preset = naughty.config.presets.normal,
                 title = "Replay buffer",
-                text = "Saving replay buffer...\n" .. filename,
+                text = "Saving replay buffer...",
                 timeout = 3
             });
-            gears.timer.start_new(1, function()
-                if file_exists(filename) then
-                    naughty.notify({
-                        preset = naughty.config.presets.normal,
-                        title = "Replay buffer",
-                        text = "Replay buffer saved :D",
-                        timeout = 3
-                    });
-                    return false;
+            gears.timer.start_new(1,
+                function()
+                    if file_exists(filename0) or file_exists(filenamem1) or file_exists(filename1) then
+                        naughty.notify({
+                            preset = naughty.config.presets.normal,
+                            title = "Replay buffer",
+                            text = "Replay buffer saved :D",
+                            timeout = 3
+                        });
+                        return false;
+                    end
+                    return true;
                 end
-                return true;
-            end)
+            )
         end
     )
 )
