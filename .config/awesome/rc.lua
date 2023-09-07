@@ -691,5 +691,5 @@ gears.timer.start_new(10, function()
     return true
 end)
 
-awful.spawn.with_shell("bash -c \"pgrep aw-qt || aw-qt\"")
-awful.spawn.with_shell("bash -c \"pgrep whatpulse || whatpulse\"")
+awful.spawn.with_shell("bash -c \"pgrep aw-qt || aw-qt > /dev/null 2>&1\"")
+awful.spawn.with_shell("bash -c \"pgrep whatpulse || whatpulse > /dev/null 2>&1\"")
