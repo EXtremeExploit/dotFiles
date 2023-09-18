@@ -19,7 +19,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local switcher = require("awesome-switcher")
 
-local volume_widget = require("volume-widget.volume")
+local volume_widget = require("volume")
+local caps_widget = require("caps")
 local battery_widget = require("battery-widget.battery")
 local calendar_widget = require("calendar-widget.calendar")
 -- or customized
@@ -106,6 +107,9 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 local mytextclock = wibox.widget.textclock("%A-%B (UTC-3) / %Y-%m-%d %T", 1)
 mytextclock:connect_signal("button::press", function(_, _, _, button)
     if button == 1 then cw.toggle() end
+    if button == 2 then os.execute("playerctl play-pause") end
+    if button == 4 then volume_widget:inc() end
+    if button == 5 then volume_widget:dec() end
 end)
 
 -- Create a wibox for each screen and add it
@@ -200,6 +204,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             volume_widget {},
+            caps_widget {},
             battery_widget({
                 show_current_level = true
             }),
@@ -323,7 +328,8 @@ local globalkeys = gears.table.join(
                 end
             )
         end
-    )
+    ),
+    awful.key({}, "Caps_Lock", function() caps_widget:toggle() end)
 )
 
 local clientkeys = gears.table.join(
