@@ -632,6 +632,7 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "csgo_linux64",
+                "cs2",
                 "hl2_linux",
                 "osu!.exe",
                 "osu!",
@@ -640,7 +641,8 @@ awful.rules.rules = {
                 "Pinball FX3.exe",
                 "Pinball FX.exe",
                 "SlimeRancher.x86_64",
-                "warfork.x86_64"
+                "warfork.x86_64",
+                "LoE.x86_64"
             },
             name = {
                 "MTA: San Andreas",
