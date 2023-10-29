@@ -37,5 +37,6 @@ starship init fish | source
 set -gx PNPM_HOME "/home/pedro/.local/share/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
 set -gx PATH "$HOME/.local/bin" $PATH
+set -gx PATH "$HOME/.deno/bin" $PATH
 
 # pnpm end
