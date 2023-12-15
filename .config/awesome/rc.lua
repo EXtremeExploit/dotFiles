@@ -269,7 +269,7 @@ local globalkeys = gears.table.join(
     awful.key({ "Control" }, "Print",
         function()
             awful.spawn.with_shell(
-                "maim ~/$(date +%Y-%m-%d-%R-%S-%N).png | xclip -selection clipboard -t image/png")
+                "maim ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png | xclip -selection clipboard -t image/png")
         end
         , { description = "Capture screen and save it to a file", group = "screenshot" }),
     -- REGION
@@ -286,7 +286,7 @@ local globalkeys = gears.table.join(
     awful.key({ modkey, "Control" }, "Print",
         function()
             awful.spawn.with_shell(
-                "maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d-%R-%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d-%R-%S-%N).png")
+                "maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png")
         end
         , { description = "Capture window and save it to a file", group = "screenshot" }),
 
@@ -294,8 +294,8 @@ local globalkeys = gears.table.join(
     awful.key({ altkey }, "Tab", function() switcher.switch(1, altkey, "Alt_L", "Shift", "Tab") end),
     awful.key({ altkey, "Shift" }, "Tab", function() switcher.switch(-1, altkey, "Alt_L", "Shift", "Tab") end),
     awful.key({ modkey }, "e", function() awful.spawn.with_shell("nemo") end, { description = "Open Nemo" }),
-    awful.key({ modkey }, "b", function() awful.spawn.with_shell("google-chrome-stable") end,
-        { description = "Open chrome" }),
+    awful.key({ modkey }, "b", function() awful.spawn.with_shell("brave") end,
+        { description = "Open browser" }),
     awful.key({ modkey }, "c", function() awful.spawn.with_shell("speedcrunch") end, { description = "Open Calculator" }),
 
 
@@ -642,9 +642,11 @@ awful.rules.rules = {
                 "Pinball FX.exe",
                 "SlimeRancher.x86_64",
                 "warfork.x86_64",
-                "LoE.x86_64"
+                "LoE.x86_64",
+                "Anonfilly.exe"
             },
             name = {
+                "Anonfilly",
                 "MTA: San Andreas",
                 "Grand Theft Auto V"
             }
