@@ -67,6 +67,51 @@
             }
           ],
           "Enable": false
+        },
+        {
+          "Path": "Circular_Area.Circular_Vertical_Squelch_Open_Mapping",
+          "Settings": [],
+          "Enable": false
+        },
+        {
+          "Path": "Circular_Area.Circular_Biased_Squelch_Horizontal",
+          "Settings": [
+            {
+              "Property": "B_raw",
+              "Value": null
+            }
+          ],
+          "Enable": false
+        },
+        {
+          "Path": "Circular_Area.Circular_Power2_Blend",
+          "Settings": [
+            {
+              "Property": "B_raw",
+              "Value": null
+            }
+          ],
+          "Enable": false
+        },
+        {
+          "Path": "Circular_Area.Circular_Non_axial_Half_Punch_Mapping",
+          "Settings": [],
+          "Enable": false
+        },
+        {
+          "Path": "Circular_Area.Circular_Simple_Stretch",
+          "Settings": [],
+          "Enable": false
+        },
+        {
+          "Path": "Circular_Area.Circular_Simple_Stretch_Inverse",
+          "Settings": [],
+          "Enable": false
+        },
+        {
+          "Path": "Circular_Area.Circular_Tapered4_Mapping_Inverse",
+          "Settings": [],
+          "Enable": false
         }
       ],
       "AbsoluteModeSettings": {
@@ -78,10 +123,10 @@
           "Rotation": 0.0
         },
         "Tablet": {
-          "Width": 86.0,
-          "Height": 48.375,
-          "X": 43.0,
-          "Y": 70.8125,
+          "Width": 79.0,
+          "Height": 44.4375,
+          "X": 39.500004,
+          "Y": 72.78125,
           "Rotation": 180.0
         },
         "EnableClipping": false,
