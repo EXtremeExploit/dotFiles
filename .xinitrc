@@ -11,11 +11,12 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
     unset f
 fi
 
-xset r rate 250 45
-setxkbmap -layout "latam"
+#xset r rate 250 45
+#setxkbmap -layout "latam"
 xset -dpms
 xset s off
 
+systemctl --user start opentabletdriver &
 xmousepasteblock &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 exec awesome
