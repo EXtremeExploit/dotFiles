@@ -93,7 +93,7 @@ end
 local mymainmenu = awful.menu({
     items = {
         { "hotkeys",       function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-        { "edit config",   editor_cmd .. " .config/awesome/" },
+        { "edit config",   function() awful.spawn.easy_async(editor .. " .config/awesome/", function() end) end },
         { "open terminal", terminal },
         { "restart",       awesome.restart },
         { "quit",          function() awesome.quit() end },
@@ -102,12 +102,15 @@ local mymainmenu = awful.menu({
 
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
+local timezone = os.date('%z')    -- "+0200"
+local signum, utcOffset, minutes = timezone:match '([+-])(%d%d)(%d%d)'
+
 -- {{{ Wibar
 -- Create a textclock widget
-local mytextclock = wibox.widget.textclock("%A-%B (UTC-3) / %Y-%m-%d %T", 1)
+local mytextclock = wibox.widget.textclock("%A-%B (UTC" .. signum .. utcOffset .. ") / %Y-%m-%d %T", 1)
 mytextclock:connect_signal("button::press", function(_, _, _, button)
     if button == 1 then cw.toggle() end
-    if button == 2 then os.execute("playerctl play-pause") end
+    if button == 2 then awful.spawn.easy_async("playerctl play-pause", function() end) end
     if button == 4 then volume_widget:inc() end
     if button == 5 then volume_widget:dec() end
 end)
@@ -147,7 +150,7 @@ local tasklist_buttons = gears.table.join(
         end
     end),
 
-    awful.button({}, 2, function(c) os.execute("playerctl play-pause") end),
+    awful.button({}, 2, function(c) awful.spawn.easy_async("playerctl play-pause", function() end) end),
     awful.button({ modkey }, 2, function(c) volume_widget:toggle() end),
     awful.button({}, 4, function() volume_widget:inc() end),
     awful.button({}, 5, function() volume_widget:dec() end))
@@ -189,7 +192,7 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons
     }
 
-    -- Create the wibox
+    -- Create the wibar
     s.mywibox = awful.wibar({ position = "bottom", screen = s, height = 20 })
 
     -- Add widgets to the wibox
@@ -223,17 +226,19 @@ local globalkeys = gears.table.join(
     awful.key({ modkey }, "h", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 
     -- Standard program
-    awful.key({ modkey }, "Return", function() awful.spawn(terminal) end,
+    awful.key({ modkey }, "Return", function() awful.spawn.easy_async(terminal, function() end) end,
         { description = "open a terminal", group = "launcher" }),
 
     -- Menubar
-    awful.key({ modkey }, "r", function() menubar.show() end, { description = "show the menubar", group = "launcher" }),
+    awful.key({ modkey }, "r",
+        function() awful.spawn.easy_async("rofi -drun-use-desktop-cache -show drun", function() end) end,
+        { description = "show the menubar", group = "launcher" }),
 
     -- Media Keys
     awful.key({}, "XF86AudioMute", function() volume_widget:toggle() end),
-    awful.key({}, "XF86AudioPlay", function() os.execute("playerctl play-pause") end),
-    awful.key({}, "XF86AudioPrev", function() os.execute("playerctl previous") end),
-    awful.key({}, "XF86AudioNext", function() os.execute("playerctl next") end),
+    awful.key({}, "XF86AudioPlay", function() awful.spawn.easy_async("playerctl play-pause", function() end) end),
+    awful.key({}, "XF86AudioPrev", function() awful.spawn.easy_async("playerctl previous", function() end) end),
+    awful.key({}, "XF86AudioNext", function() awful.spawn.easy_async("playerctl next", function() end) end),
     awful.key({}, "XF86AudioRaiseVolume", function()
         volume_widget:inc()
     end),
@@ -243,11 +248,11 @@ local globalkeys = gears.table.join(
 
     awful.key({ modkey }, "Escape", function() volume_widget:toggle() end,
         { description = "Toggle playback mute", group = "media" }),
-    awful.key({ modkey }, "a", function() os.execute("playerctl previous") end,
+    awful.key({ modkey }, "a", function() awful.spawn.easy_async("playerctl previous", function() end) end,
         { description = "Previous track", group = "media" }),
-    awful.key({ modkey }, "d", function() os.execute("playerctl next") end,
+    awful.key({ modkey }, "d", function() awful.spawn.easy_async("playerctl next", function() end) end,
         { description = "Next track", group = "media" }),
-    awful.key({ modkey }, "space", function() awful.spawn("playerctl play-pause") end,
+    awful.key({ modkey }, "space", function() awful.spawn.easy_async("playerctl play-pause", function() end) end,
         { description = "Play/Pause track", group = "media" }),
 
     awful.key({ modkey }, "w", function()
@@ -264,39 +269,44 @@ local globalkeys = gears.table.join(
     -- Super+Control+Shift+S = Region > Clipboard & File
     -- Super+Print = Window > Clipboard
     -- Super+Control+Print = Window > Clipboard & File
-    awful.key({}, "Print", function() awful.spawn.with_shell("maim | xclip -selection clipboard -t image/png") end,
+    awful.key({}, "Print",
+        function() awful.spawn.easy_async_with_shell("maim | xclip -selection clipboard -t image/png", function() end) end,
         { description = "Capture screen", group = "screenshot" }),
     awful.key({ "Control" }, "Print",
         function()
-            awful.spawn.with_shell(
-                "maim ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png | xclip -selection clipboard -t image/png")
+            awful.spawn.easy_async_with_shell(
+                "maim ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png | xclip -selection clipboard -t image/png", function() end)
         end
         , { description = "Capture screen and save it to a file", group = "screenshot" }),
     -- REGION
     awful.key({ modkey, "Shift" }, "s",
-        function() awful.spawn.with_shell("bash ~/.config/awesome/maimhandler.sh clipboard") end,
+        function() awful.spawn.easy_async_with_shell("bash ~/.config/awesome/maimhandler.sh clipboard", function() end) end,
         { description = "Capture region", group = "screenshot" }),
     awful.key({ modkey, "Shift", "Control" }, "s",
-        function() awful.spawn.with_shell("bash ~/.config/awesome/maimhandler.sh file") end
+        function() awful.spawn.easy_async_with_shell("bash ~/.config/awesome/maimhandler.sh file", function() end) end
         , { description = "Capture region and save it to a file", group = "screenshot" }),
     -- WINDOW
     awful.key({ modkey }, "Print",
-        function() awful.spawn.with_shell("maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png") end
+        function() awful.spawn.easy_async_with_shell(
+            "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png", function() end) end
         , { description = "Capture window", group = "screenshot" }),
     awful.key({ modkey, "Control" }, "Print",
         function()
-            awful.spawn.with_shell(
-                "maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png")
+            awful.spawn.easy_async_with_shell(
+                "maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png",
+                function() end)
         end
         , { description = "Capture window and save it to a file", group = "screenshot" }),
 
     -- Alt+Tab
     awful.key({ altkey }, "Tab", function() switcher.switch(1, altkey, "Alt_L", "Shift", "Tab") end),
     awful.key({ altkey, "Shift" }, "Tab", function() switcher.switch(-1, altkey, "Alt_L", "Shift", "Tab") end),
-    awful.key({ modkey }, "e", function() awful.spawn.with_shell("nemo") end, { description = "Open Nemo" }),
-    awful.key({ modkey }, "b", function() awful.spawn.with_shell("brave") end,
+    awful.key({ modkey }, "e", function() awful.spawn.easy_async("nemo", function() end) end,
+        { description = "Open Nemo" }),
+    awful.key({ modkey }, "b", function() awful.spawn.easy_async("brave", function() end) end,
         { description = "Open browser" }),
-    awful.key({ modkey }, "c", function() awful.spawn.with_shell("speedcrunch") end, { description = "Open Calculator" }),
+    awful.key({ modkey }, "c", function() awful.spawn.easy_async("speedcrunch", function() end) end,
+        { description = "Open Calculator" }),
 
 
     -- Hidden
@@ -391,128 +401,102 @@ local clientkeys = gears.table.join(
         client:raise()
     end, { description = "Snap to right", group = "layout" }),
 
+    awful.key({ modkey, "Shift" }, "Left", function(client)
+        client.maximized_vertical = false
+        awful.placement.scale(client.focus, {
+            to_percent = 0.5,
+            direction = "up",
+            honor_workarea = true
+        })
+        awful.placement.scale(client.focus, {
+            to_percent = 0.5,
+            direction = "right",
+            honor_workarea = true
+        })
+        awful.placement.top_left(client)
+    end,{ description = "Snap top left", group = "layout" }),
+
+    awful.key({ modkey, "Shift" }, "Right", function(client)
+        client.maximized_vertical = false
+        awful.placement.scale(client.focus, {
+            to_percent = 0.5,
+            direction = "up",
+            honor_workarea = true
+        })
+        awful.placement.scale(client.focus, {
+            to_percent = 0.5,
+            direction = "right",
+            honor_workarea = true
+        })
+        awful.placement.top_right(client)
+    end,{ description = "Snap top right", group = "layout" }),
+
+
+    awful.key({ modkey, "Control" }, "Right", function(client)
+        client.maximized_vertical = false
+        awful.placement.scale(client.focus, {
+            to_percent = 0.5,
+            direction = "up",
+            honor_workarea = true
+        })
+        awful.placement.scale(client.focus, {
+            to_percent = 0.5,
+            direction = "right",
+            honor_workarea = true
+        })
+        awful.placement.bottom_right(client)
+        client.y = client.y - 20
+    end,{ description = "Snap bottom right", group = "layout" }),
+
+
+    awful.key({ modkey, "Control" }, "Left", function(client)
+        client.maximized_vertical = false
+        awful.placement.scale(client.focus, {
+            to_percent = 0.5,
+            direction = "up",
+            honor_workarea = true
+        })
+        awful.placement.scale(client.focus, {
+            to_percent = 0.5,
+            direction = "right",
+            honor_workarea = true
+        })
+        awful.placement.bottom_left(client)
+        client.y = client.y - 20
+    end,{ description = "Snap bottom left", group = "layout" }),
+
+
     awful.key({ modkey }, "Up", function(client)
         client.maximized = false
-
-        if client.maximized_vertical then
-            if client.x == 0 then
-                client.maximized_vertical = false
-                awful.placement.scale(client.focus, {
-                    to_percent = 0.5,
-                    direction = "up",
-                    honor_workarea = true
-                })
-                awful.placement.scale(client.focus, {
-                    to_percent = 0.5,
-                    direction = "right",
-                    honor_workarea = true
-                })
-                awful.placement.top_left(client)
-            else
-                if client.x + client.width == 1920 then
-                    client.maximized_vertical = false
-                    awful.placement.scale(client.focus, {
-                        to_percent = 0.5,
-                        direction = "up",
-                        honor_workarea = true
-                    })
-                    awful.placement.scale(client.focus, {
-                        to_percent = 0.5,
-                        direction = "right",
-                        honor_workarea = true
-                    })
-                    awful.placement.top_right(client)
-                else
-                    client.maximized_vertical = false
-                    awful.placement.scale(client.focus, {
-                        to_percent = 0.5,
-                        direction = "up",
-                        honor_workarea = true
-                    })
-                    awful.placement.scale(client.focus, {
-                        to_percent = 1,
-                        direction = "left",
-                        honor_workarea = true
-                    })
-                    awful.placement.top(client.focus)
-                end
-            end
-        else
-            client.maximized_vertical = false
-            awful.placement.scale(client.focus, {
-                to_percent = 0.5,
-                direction = "up",
-                honor_workarea = true
-            })
-            awful.placement.scale(client.focus, {
-                to_percent = 1,
-                direction = "left",
-                honor_workarea = true
-            })
-            awful.placement.top(client.focus)
-        end
+        client.maximized_vertical = false
+        awful.placement.scale(client.focus, {
+            to_percent = 0.5,
+            direction = "up",
+            honor_workarea = true
+        })
+        awful.placement.scale(client.focus, {
+            to_percent = 1,
+            direction = "left",
+            honor_workarea = true
+        })
+        awful.placement.top(client.focus)
     end, { description = "Snap Up", group = "layout" }),
 
     awful.key({ modkey }, "Down", function(client)
         client.maximized = false
 
-        if client.maximized_vertical then
-            if client.x == 0 then
-                client.maximized_vertical = false
-                awful.placement.scale(client.focus, {
-                    to_percent = 0.5,
-                    direction = "up",
-                    honor_workarea = true
-                })
-                awful.placement.scale(client.focus, {
-                    to_percent = 0.5,
-                    direction = "right",
-                    honor_workarea = true
-                })
-                awful.placement.bottom_left(client)
-            else
-                if client.x + client.width >= 1920 - 2 then
-                    client.maximized_vertical = false
-                    awful.placement.scale(client.focus, {
-                        to_percent = 0.5,
-                        direction = "up",
-                        honor_workarea = true
-                    })
-                    awful.placement.scale(client.focus, {
-                        to_percent = 0.5,
-                        direction = "right",
-                        honor_workarea = true
-                    })
-                    awful.placement.bottom_right(client)
-                else
-                    awful.placement.scale(client.focus, {
-                        to_percent = 0.5,
-                        direction = "down",
-                        honor_workarea = true
-                    })
-                    awful.placement.scale(client.focus, {
-                        to_percent = 1,
-                        direction = "left",
-                        honor_workarea = true
-                    })
+        awful.placement.scale(client.focus, {
+            to_percent = 0.5,
+            direction = "down",
+            honor_workarea = true
+        })
+        awful.placement.scale(client.focus, {
+            to_percent = 1,
+            direction = "left",
+            honor_workarea = true
+        })
 
-                    awful.placement.bottom(client.focus)
-                end
-            end
-        else
-            awful.placement.scale(client.focus, {
-                to_percent = 0.5,
-                direction = "down",
-                honor_workarea = true
-            })
-            awful.placement.scale(client.focus, {
-                to_percent = 1,
-                direction = "left",
-                honor_workarea = true
-            })
-
-            awful.placement.bottom(client.focus)
-        end
+        awful.placement.bottom(client.focus)
         client.y = client.y - 20
     end, { description = "Snap Down", group = "layout" })
 )
@@ -634,6 +618,7 @@ awful.rules.rules = {
                 "csgo_linux64",
                 "cs2",
                 "hl2_linux",
+                "tf_linux",
                 "osu!.exe",
                 "osu!",
                 "Terraria.bin.x86_64",
@@ -643,7 +628,9 @@ awful.rules.rules = {
                 "SlimeRancher.x86_64",
                 "warfork.x86_64",
                 "LoE.x86_64",
-                "Anonfilly.exe"
+                "Anonfilly.exe",
+                "GeometryDash.exe",
+                "MLP.exe"
             },
             name = {
                 "Anonfilly",
@@ -654,12 +641,12 @@ awful.rules.rules = {
         properties = { tag = "F", keys = gameKeys }
     },
 
-    --Minecraft server
+    -- Minecraft
     {
-        rule_any = {
-            name = "Minecraft server"
+        rule = {
+            class = "^Minecraft"
         },
-        properties = { tag = "H" }
+        properties = { tag = "F", keys = gameKeys, fullscreen = true }
     }
 }
 -- }}}
@@ -701,5 +688,5 @@ gears.timer.start_new(10, function()
     return true
 end)
 
-awful.spawn.with_shell("bash -c \"pgrep aw-qt || aw-qt > /dev/null 2>&1\"")
-awful.spawn.with_shell("bash -c \"pgrep whatpulse || whatpulse > /dev/null 2>&1\"")
+-- awful.spawn.with_shell("bash -c \"pgrep aw-qt || aw-qt > /dev/null 2>&1\"")
+awful.spawn.easy_async_with_shell("bash -c \"pgrep whatpulse || whatpulse > /dev/null 2>&1\"", function() end)

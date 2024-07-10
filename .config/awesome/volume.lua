@@ -1,32 +1,20 @@
--------------------------------------------------
--- The Ultimate Volume Widget for Awesome Window Manager
--- More details could be found here:
--- https://github.com/streetturtle/awesome-wm-widgets/tree/master/volume-widget
-
--- @author Pavel Makhov
--- @copyright 2020 Pavel Makhov
--------------------------------------------------
-
 local awful = require("awful")
-local spawn = require("awful.spawn")
-local watch = require("awful.widget.watch")
 local beautiful = require('beautiful')
+local gears = require("gears")
 local wibox = require("wibox")
 
-local GET_VOLUME_CMD = 'amixer -D pulse sget Master'
-local function INC_VOLUME_CMD(step) return 'pactl set-sink-volume 0 +' .. step .. '%' end
-local function DEC_VOLUME_CMD(step) return 'pactl set-sink-volume 0 -' .. step .. '%' end
-local TOG_VOLUME_CMD = 'amixer -D pulse sset Master toggle'
+local pa = require("pulseaudio");
 
-local volume = {}
+local widget = {}
 
 local function worker()
-    local refresh_rate = 1
-    local step = 2
-    local lastKnownVol = 0
-    local lastKnownStatus = 'on'
+    local refresh_rate = 1;
+    local step = 2;
 
-    volume.widget = wibox.widget {
+    local volume = 0;
+    local isMuted = false;
+
+    widget.widget = wibox.widget {
         {
             id = 'txt',
             font = beautiful.font,
@@ -38,65 +26,85 @@ local function worker()
         end
     }
 
-    local function update_graphic(widget)
-        local status
-        if lastKnownStatus == 'off' then
-            status = string.format("% 3dM ", lastKnownVol)
-        else
-            status = string.format("% 3d%% ", lastKnownVol)
+    local function getDefaultSink()
+        local sinks = pa.get_sinks()
+        for _, value in pairs(sinks) do
+            if value.default then
+                return value;
+            end
         end
-        widget:setInnerText(status)
+        return {};
+    end
+
+    function widget:refresh()
+        local status;
+        if isMuted then
+            status = string.format("% 3dM ", volume)
+        else
+            status = string.format("% 3d%% ", volume)
+        end
+        widget.widget:setInnerText(status);
     end
 
     local function updateCachedStatus()
-        spawn.easy_async(GET_VOLUME_CMD, function(stdout)
-            local volume_level, status = string.match(stdout, "%[(%d+)%%]% %[(%w+)]");
-            lastKnownStatus = status;
-            lastKnownVol = volume_level;
-            update_graphic(volume.widget);
-        end)
-    end
+        local sink = getDefaultSink();
+        volume = sink.volume;
+        isMuted = sink.mute;
 
-    function volume:inc()
-        lastKnownVol = lastKnownVol + step
-        spawn.easy_async(INC_VOLUME_CMD(step), function(stdout) volume:refresh() end)
-    end
+        if not (volume % 2 == 0) then
+            volume = volume - 1;
 
-    function volume:dec()
-        lastKnownVol = lastKnownVol - step
-        if lastKnownVol < 0 then
-            lastKnownVol = 0
+            pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
         end
-        spawn.easy_async(DEC_VOLUME_CMD(step), function(stdout) volume:refresh() end)
+        widget:refresh();
     end
 
-    function volume:refresh()
-        -- Check if volume is odd, if it is then decrement by 1
-        awful.spawn.with_shell("bash ~/.config/awesome/evenVolume.sh");
-        spawn.easy_async(GET_VOLUME_CMD, function(stdout) update_graphic(volume.widget) end)
+    function widget:inc()
+        local sink = getDefaultSink();
+        local newVol = sink.volume + step;
+        volume = newVol;
+        isMuted = sink.mute;
+
+        widget:refresh();
+        pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
     end
 
-    function volume:toggle()
-        if lastKnownStatus == 'on' then
-            lastKnownStatus = 'off'
-        else
-            lastKnownStatus = 'on'
-        end
+    function widget:dec()
+        local sink = getDefaultSink();
+        local newVol = math.max(0, sink.volume - step);
+        volume = newVol;
+        isMuted = sink.mute;
 
-        spawn.easy_async(TOG_VOLUME_CMD, function(stdout) volume:refresh() end)
+
+        widget:refresh();
+        pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
     end
 
-    volume.widget:buttons(
+    function widget:toggle()
+        local sink = getDefaultSink();
+
+        volume = sink.volume;
+        isMuted = not sink.mute;
+
+        pa.set_sink_volume(sink.index, { volume = sink.volume, mute = isMuted });
+        widget:refresh();
+    end
+
+    widget.widget:buttons(
         awful.util.table.join(
-            awful.button({}, 4, function() volume:inc() end),
-            awful.button({}, 5, function() volume:dec() end)
+            awful.button({}, 4, function() widget:inc() end),
+            awful.button({}, 5, function() widget:dec() end)
         )
     )
 
-    updateCachedStatus()
-    watch(GET_VOLUME_CMD, refresh_rate, updateCachedStatus, volume.widget)
+    gears.timer {
+        timeout = refresh_rate,
+        call_now = true,
+        autostart = true,
+        callback = updateCachedStatus
+    }
 
-    return volume.widget
+    return widget.widget;
 end
 
-return setmetatable(volume, { __call = function(_, ...) return worker() end })
+return setmetatable(widget, { __call = function(_, ...) return worker() end })
