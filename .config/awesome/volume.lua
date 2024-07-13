@@ -61,7 +61,10 @@ local function worker()
 
     function widget:inc()
         local sink = getDefaultSink();
-        local newVol = sink.volume + step;
+        local newVol = math.min(100, sink.volume + step);
+        if sink.volume == newVol then
+            return;
+        end
         volume = newVol;
         isMuted = sink.mute;
 
@@ -72,9 +75,11 @@ local function worker()
     function widget:dec()
         local sink = getDefaultSink();
         local newVol = math.max(0, sink.volume - step);
+        if sink.volume == newVol then
+            return;
+        end
         volume = newVol;
         isMuted = sink.mute;
-
 
         widget:refresh();
         pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });

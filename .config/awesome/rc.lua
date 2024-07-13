@@ -28,7 +28,7 @@ local cw = calendar_widget({
     theme = "nord",
     placement = "bottom_right",
     radius = 5,
-})
+});
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -103,11 +103,10 @@ local mymainmenu = awful.menu({
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
 local timezone = os.date('%z')    -- "+0200"
-local signum, utcOffset, minutes = timezone:match '([+-])(%d%d)(%d%d)'
 
 -- {{{ Wibar
 -- Create a textclock widget
-local mytextclock = wibox.widget.textclock("%A-%B (UTC" .. signum .. utcOffset .. ") / %Y-%m-%d %T", 1)
+local mytextclock = wibox.widget.textclock("%A-%B (UTC" .. timezone .. ") / %Y-%m-%d %T", 1)
 mytextclock:connect_signal("button::press", function(_, _, _, button)
     if button == 1 then cw.toggle() end
     if button == 2 then awful.spawn.easy_async("playerctl play-pause", function() end) end
@@ -575,7 +574,6 @@ for i = 1, #tags do
     )
 end
 
-
 root.keys(globalkeys)
 
 local clientbuttons = gears.table.join(
@@ -670,8 +668,8 @@ end)
 
 switcher.settings.preview_box = true                                      -- display preview-box
 switcher.settings.preview_box_bg = "#000000ff"                            -- background color
-switcher.settings.preview_box_border = "#aaaaaa00"                        -- border-color
-switcher.settings.preview_box_fps = 240                                   -- refresh framerate
+switcher.settings.preview_box_border = "#aaaaaaff"                        -- border-color
+switcher.settings.preview_box_fps = 75                                   -- refresh framerate
 switcher.settings.preview_box_delay = 50                                  -- delay in ms
 switcher.settings.preview_box_title_font = { "sans", "italic", "normal" } -- the font for cairo
 switcher.settings.preview_box_title_font_size_factor = 0.8                -- the font sizing factor

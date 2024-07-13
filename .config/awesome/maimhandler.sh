@@ -20,8 +20,6 @@ function regionHandler() {
 		sleep 0.1
 	done
 
-	printf "arg $arg"
-
 	# get window ID of feh
 	local wid="$(xdotool search --pid "$feh_pid")"
 
