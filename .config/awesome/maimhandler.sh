@@ -3,12 +3,12 @@
 arg="$1"
 
 function maimSelectionClipboard() {
-	maim -s | xclip -selection clipboard -t image/png
+	maim -m 1 -s | xclip -selection clipboard -t image/png
 }
 
 function maimSelectionClipboardFile() {
 	local date=$(date +%Y-%m-%d-%H-%M-%S-%N)
-	maim -s ~/$date.png && xclip -selection clipboard -t image/png ~/$date.png
+	maim -m 1 -s ~/$date.png && xclip -selection clipboard -t image/png ~/$date.png
 }
 
 function regionHandler() {

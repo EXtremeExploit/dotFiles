@@ -30,6 +30,7 @@ local cw = calendar_widget({
     radius = 5,
 });
 
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -269,12 +270,15 @@ local globalkeys = gears.table.join(
     -- Super+Print = Window > Clipboard
     -- Super+Control+Print = Window > Clipboard & File
     awful.key({}, "Print",
-        function() awful.spawn.easy_async_with_shell("maim | xclip -selection clipboard -t image/png", function() end) end,
+        function()
+            awful.spawn.easy_async_with_shell("maim -m 1 | xclip -selection clipboard -t image/png",
+                function() end)
+        end,
         { description = "Capture screen", group = "screenshot" }),
     awful.key({ "Control" }, "Print",
         function()
             awful.spawn.easy_async_with_shell(
-                "maim ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png | xclip -selection clipboard -t image/png", function() end)
+                "maim -m 1 ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png | xclip -selection clipboard -t image/png", function() end)
         end
         , { description = "Capture screen and save it to a file", group = "screenshot" }),
     -- REGION
@@ -286,13 +290,15 @@ local globalkeys = gears.table.join(
         , { description = "Capture region and save it to a file", group = "screenshot" }),
     -- WINDOW
     awful.key({ modkey }, "Print",
-        function() awful.spawn.easy_async_with_shell(
-            "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png", function() end) end
+        function()
+            awful.spawn.easy_async_with_shell(
+                "maim -m 1 -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png", function() end)
+        end
         , { description = "Capture window", group = "screenshot" }),
     awful.key({ modkey, "Control" }, "Print",
         function()
             awful.spawn.easy_async_with_shell(
-                "maim -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png",
+                "maim -m 1 -i $(xdotool getactivewindow) ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png | xclip -selection clipboard -t image/png ~/$(date +%Y-%m-%d-%H-%M-%S-%N).png",
                 function() end)
         end
         , { description = "Capture window and save it to a file", group = "screenshot" }),
@@ -413,7 +419,7 @@ local clientkeys = gears.table.join(
             honor_workarea = true
         })
         awful.placement.top_left(client)
-    end,{ description = "Snap top left", group = "layout" }),
+    end, { description = "Snap top left", group = "layout" }),
 
     awful.key({ modkey, "Shift" }, "Right", function(client)
         client.maximized_vertical = false
@@ -428,9 +434,7 @@ local clientkeys = gears.table.join(
             honor_workarea = true
         })
         awful.placement.top_right(client)
-    end,{ description = "Snap top right", group = "layout" }),
-
-
+    end, { description = "Snap top right", group = "layout" }),
     awful.key({ modkey, "Control" }, "Right", function(client)
         client.maximized_vertical = false
         awful.placement.scale(client.focus, {
@@ -445,9 +449,7 @@ local clientkeys = gears.table.join(
         })
         awful.placement.bottom_right(client)
         client.y = client.y - 20
-    end,{ description = "Snap bottom right", group = "layout" }),
-
-
+    end, { description = "Snap bottom right", group = "layout" }),
     awful.key({ modkey, "Control" }, "Left", function(client)
         client.maximized_vertical = false
         awful.placement.scale(client.focus, {
@@ -462,7 +464,7 @@ local clientkeys = gears.table.join(
         })
         awful.placement.bottom_left(client)
         client.y = client.y - 20
-    end,{ description = "Snap bottom left", group = "layout" }),
+    end, { description = "Snap bottom left", group = "layout" }),
 
 
     awful.key({ modkey }, "Up", function(client)
@@ -619,7 +621,7 @@ awful.rules.rules = {
                 "tf_linux",
                 "osu!.exe",
                 "osu!",
-                "Terraria.bin.x86_64",
+                "",
                 "portal2_linux",
                 "Pinball FX3.exe",
                 "Pinball FX.exe",
@@ -628,10 +630,11 @@ awful.rules.rules = {
                 "LoE.x86_64",
                 "Anonfilly.exe",
                 "GeometryDash.exe",
-                "MLP.exe"
+                "MLP.exe",
+                "gmod",
+                "steam_app_4000"
             },
             name = {
-                "Anonfilly",
                 "MTA: San Andreas",
                 "Grand Theft Auto V"
             }
@@ -642,9 +645,28 @@ awful.rules.rules = {
     -- Minecraft
     {
         rule = {
-            class = "^Minecraft"
+            class = "^Minecraft",
+            name = "^Minecraft"
         },
         properties = { tag = "F", keys = gameKeys, fullscreen = true }
+    },
+
+    -- Terraria
+    {
+        rule = {
+            class = "Terraria.bin.x86_64",
+            name = "^Terraria"
+        },
+        properties = { tag = "F", keys = gameKeys }
+    },
+
+    -- Terraria/tModLoader
+    {
+        rule = {
+            class = "dotnet",
+            name = "^Terraria"
+        },
+        properties = { tag = "F", keys = gameKeys }
     }
 }
 -- }}}
@@ -669,7 +691,7 @@ end)
 switcher.settings.preview_box = true                                      -- display preview-box
 switcher.settings.preview_box_bg = "#000000ff"                            -- background color
 switcher.settings.preview_box_border = "#aaaaaaff"                        -- border-color
-switcher.settings.preview_box_fps = 75                                   -- refresh framerate
+switcher.settings.preview_box_fps = 75                                    -- refresh framerate
 switcher.settings.preview_box_delay = 50                                  -- delay in ms
 switcher.settings.preview_box_title_font = { "sans", "italic", "normal" } -- the font for cairo
 switcher.settings.preview_box_title_font_size_factor = 0.8                -- the font sizing factor
