@@ -16,7 +16,6 @@ fi
 xset -dpms
 xset s off
 
-systemctl --user start opentabletdriver &
 xmousepasteblock &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 exec awesome
