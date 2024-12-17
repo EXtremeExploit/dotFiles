@@ -2,7 +2,12 @@ local beautiful = require('beautiful')
 local gears = require("gears")
 local wibox = require("wibox")
 
-local xkb = require('xindicators')
+
+local utils = require('utils');
+local isXKBok = utils.isModuleAvailable("xindicators") and _VERSION == "Lua 5.4";
+if (isXKBok) then
+    xkb = require('xindicators')
+end
 
 local caps = {}
 
@@ -27,7 +32,9 @@ local function worker()
     }
 
     local function updateCachedStatus()
-        lastKnownCaps = xkb.caps_lock();
+        if (isXKBok) then
+            lastKnownCaps = xkb.caps_lock();
+        end
         caps:refresh()
     end
 

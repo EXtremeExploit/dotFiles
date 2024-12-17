@@ -19,8 +19,9 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local switcher = require("awesome-switcher")
 
+local internet_widget = require("internet");
 local volume_widget = require("volume")
-local caps_widget = require("caps")
+local caps_widget = require("caps");
 local battery_widget = require("battery-widget.battery")
 local calendar_widget = require("calendar-widget.calendar")
 -- or customized
@@ -207,6 +208,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             volume_widget {},
+            internet_widget {},
             caps_widget {},
             battery_widget({
                 show_current_level = true
@@ -235,16 +237,16 @@ local globalkeys = gears.table.join(
         { description = "show the menubar", group = "launcher" }),
 
     -- Media Keys
-    awful.key({}, "XF86AudioMute", function() volume_widget:toggle() end),
-    awful.key({}, "XF86AudioPlay", function() awful.spawn.easy_async("playerctl play-pause", function() end) end),
-    awful.key({}, "XF86AudioPrev", function() awful.spawn.easy_async("playerctl previous", function() end) end),
-    awful.key({}, "XF86AudioNext", function() awful.spawn.easy_async("playerctl next", function() end) end),
-    awful.key({}, "XF86AudioRaiseVolume", function()
-        volume_widget:inc()
-    end),
-    awful.key({}, "XF86AudioLowerVolume", function()
-        volume_widget:dec()
-    end),
+    -- awful.key({}, "XF86AudioMute", function() volume_widget:toggle() end),
+    -- awful.key({}, "XF86AudioPlay", function() awful.spawn.easy_async("playerctl play-pause", function() end) end),
+    -- awful.key({}, "XF86AudioPrev", function() awful.spawn.easy_async("playerctl previous", function() end) end),
+    -- awful.key({}, "XF86AudioNext", function() awful.spawn.easy_async("playerctl next", function() end) end),
+    -- awful.key({}, "XF86AudioRaiseVolume", function()
+    --     volume_widget:inc()
+    -- end),
+    -- awful.key({}, "XF86AudioLowerVolume", function()
+    --     volume_widget:dec()
+    -- end),
 
     awful.key({ modkey }, "Escape", function() volume_widget:toggle() end,
         { description = "Toggle playback mute", group = "media" }),
@@ -620,8 +622,9 @@ awful.rules.rules = {
                 "hl2_linux",
                 "tf_linux",
                 "osu!.exe",
+                "steam_app_727",
                 "osu!",
-                "",
+                "Terraria.bin.x86_64",
                 "portal2_linux",
                 "Pinball FX3.exe",
                 "Pinball FX.exe",

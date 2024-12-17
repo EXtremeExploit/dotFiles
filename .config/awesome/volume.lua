@@ -3,7 +3,12 @@ local beautiful = require('beautiful')
 local gears = require("gears")
 local wibox = require("wibox")
 
-local pa = require("pulseaudio");
+local utils = require('utils');
+local isPAOk = utils.isModuleAvailable("pulseaudio") and _VERSION == "Lua 5.4";
+
+if isPAOk then
+    pa = require("pulseaudio");
+end
 
 local widget = {}
 
@@ -27,10 +32,12 @@ local function worker()
     }
 
     local function getDefaultSink()
-        local sinks = pa.get_sinks()
-        for _, value in pairs(sinks) do
-            if value.default then
-                return value;
+        if isPAOk then
+            local sinks = pa.get_sinks()
+            for _, value in pairs(sinks) do
+                if value.default then
+                    return value;
+                end
             end
         end
         return {};
@@ -47,51 +54,59 @@ local function worker()
     end
 
     local function updateCachedStatus()
-        local sink = getDefaultSink();
-        volume = sink.volume;
-        isMuted = sink.mute;
+        if isPAOk then
+            local sink = getDefaultSink();
+            volume = sink.volume or 0;
+            isMuted = sink.mute or false;
 
-        if not (volume % 2 == 0) then
-            volume = volume - 1;
+            if not (volume % 2 == 0) then
+                volume = volume - 1;
 
-            pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
+                pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
+            end
         end
         widget:refresh();
     end
 
     function widget:inc()
-        local sink = getDefaultSink();
-        local newVol = math.min(100, sink.volume + step);
-        if sink.volume == newVol then
-            return;
-        end
-        volume = newVol;
-        isMuted = sink.mute;
+        if isPAOk then
+            local sink = getDefaultSink();
+            local newVol = math.min(100, sink.volume + step);
+            if sink.volume == newVol then
+                return;
+            end
+            volume = newVol;
+            isMuted = sink.mute;
 
-        widget:refresh();
-        pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
+            widget:refresh();
+            pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
+        end
     end
 
     function widget:dec()
-        local sink = getDefaultSink();
-        local newVol = math.max(0, sink.volume - step);
-        if sink.volume == newVol then
-            return;
-        end
-        volume = newVol;
-        isMuted = sink.mute;
+        if isPAOk then
+            local sink = getDefaultSink();
+            local newVol = math.max(0, sink.volume - step);
+            if sink.volume == newVol then
+                return;
+            end
+            volume = newVol;
+            isMuted = sink.mute;
 
-        widget:refresh();
-        pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
+            widget:refresh();
+            pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
+        end
     end
 
     function widget:toggle()
-        local sink = getDefaultSink();
+        if isPAOk then
+            local sink = getDefaultSink();
 
-        volume = sink.volume;
-        isMuted = not sink.mute;
+            volume = sink.volume;
+            isMuted = not sink.mute;
 
-        pa.set_sink_volume(sink.index, { volume = sink.volume, mute = isMuted });
+            pa.set_sink_volume(sink.index, { volume = sink.volume, mute = isMuted });
+        end
         widget:refresh();
     end
 
