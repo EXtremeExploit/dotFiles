@@ -1,0 +1,44 @@
+/**
+ * rofi -dump-theme output.
+ * Rofi version: 1.7.5+wayland3
+ **/
+* {
+    background-color: Black;
+    border-color:     White;
+    font:             "Cascadia Code 8";
+    text-color:       White;
+}
+window {
+    width:    100.0000% ;
+    padding:  0px ;
+    anchor:   north;
+    location: north;
+    children: [ "horibox" ];
+}
+horibox {
+    orientation: horizontal;
+    children:    [ "entry","listview" ];
+}
+listview {
+    layout:  horizontal;
+    spacing: 0px ;
+    lines:   100;
+}
+entry {
+    width:  10.0000em ;
+    expand: false;
+}
+element {
+    padding: 4px 4px ;
+}
+element selected {
+    background-color: #91231c;
+}
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+}
+element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}
