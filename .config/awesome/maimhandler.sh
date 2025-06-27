@@ -8,7 +8,7 @@ function maimSelectionClipboard() {
 
 function maimSelectionClipboardFile() {
 	local date=$(date +%Y-%m-%d-%H-%M-%S-%N)
-	maim -m 1 -s ~/$date.png && xclip -selection clipboard -t image/png ~/$date.png
+	maim -m 1 -s ~/$date.png | xclip -selection clipboard -t image/png ~/$date.png
 }
 
 function regionHandler() {
