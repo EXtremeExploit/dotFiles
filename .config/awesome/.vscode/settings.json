@@ -5,6 +5,8 @@
         "screen",
         "mouse",
         "keygrabber",
-        "client"
-    ]
+        "client",
+        "dbus"
+    ],
+    "discord.enabled": false
 }
