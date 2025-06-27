@@ -25,18 +25,14 @@ set -x QT_QPA_PLATFORMTHEME qt5ct
 set -x WINEDLLOVERRIDES winemenubuilder.exe=d
 
 set -x ANDROID_HOME $HOME/.android
-set -x XINITRC $XDG_CONFIG_HOME/X11/xinitrc
 
 set -x XMODIFIERS @im=xim
 
-fish_add_path /home/pedro/.local/bin
-fish_add_path /home/pedro/.spicetify
+# Python UV venv
+if test -e $HOME/.venv/bin/activate.fish
+    source $HOME/.venv/bin/activate.fish
+end
+
+fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.spicetify
 starship init fish | source
-
-# pnpm
-set -gx PNPM_HOME "/home/pedro/.local/share/pnpm"
-set -gx PATH "$PNPM_HOME" $PATH
-set -gx PATH "$HOME/.local/bin" $PATH
-#set -gx PATH "$HOME/.deno/bin" $PATH
-
-# pnpm end
