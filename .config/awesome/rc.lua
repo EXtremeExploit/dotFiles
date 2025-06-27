@@ -31,7 +31,6 @@ local cw = calendar_widget({
     radius = 5,
 });
 
-
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -66,6 +65,21 @@ end
 beautiful.init("~/.config/awesome/theme.lua")
 naughty.config.defaults['icon_size'] = 128
 
+
+local dbusName = 'org.awesomewm.CustomInterface'
+local dbusMatch = "interface='org.awesomewm.CustomInterface', member='MyCustomMessage'"
+
+dbus.request_name("session", dbusName)
+
+dbus.add_match("session", dbusMatch)
+
+dbus.connect_signal(dbusName, function(bus, sender, message, _, _, _)
+    if sender == "internet" then
+        internet_widget:setStatus(message == "good internet")
+    end
+end)
+
+
 -- This is used later as the default terminal and editor to run.
 local terminal = "kitty"
 local editor = os.getenv("EDITOR") or "code"
@@ -92,12 +106,19 @@ local function file_exists(name)
     end
 end
 
+local function custom_restart()
+    dbus.remove_match("session", dbusMatch)
+    dbus.release_name('session', dbusName)
+
+    awesome.restart()
+end
+
 local mymainmenu = awful.menu({
     items = {
         { "hotkeys",       function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
         { "edit config",   function() awful.spawn.easy_async(editor .. " .config/awesome/", function() end) end },
         { "open terminal", terminal },
-        { "restart",       awesome.restart },
+        { "restart",       custom_restart },
         { "quit",          function() awesome.quit() end },
     }
 })
@@ -222,7 +243,7 @@ end)
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
     awful.key({ modkey, "Shift" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
-    awful.key({ modkey, "Shift" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
+    awful.key({ modkey, "Shift" }, "r", custom_restart, { description = "reload awesome", group = "awesome" }),
     awful.key({ modkey, "Shift" }, "h", function() mymainmenu:show() end,
         { description = "show main menu", group = "awesome" }),
     awful.key({ modkey }, "h", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
@@ -410,6 +431,7 @@ local clientkeys = gears.table.join(
 
     awful.key({ modkey, "Shift" }, "Left", function(client)
         client.maximized_vertical = false
+        client.maximized = false
         awful.placement.scale(client.focus, {
             to_percent = 0.5,
             direction = "up",
@@ -425,6 +447,7 @@ local clientkeys = gears.table.join(
 
     awful.key({ modkey, "Shift" }, "Right", function(client)
         client.maximized_vertical = false
+        client.maximized = false
         awful.placement.scale(client.focus, {
             to_percent = 0.5,
             direction = "up",
@@ -439,6 +462,7 @@ local clientkeys = gears.table.join(
     end, { description = "Snap top right", group = "layout" }),
     awful.key({ modkey, "Control" }, "Right", function(client)
         client.maximized_vertical = false
+        client.maximized = false
         awful.placement.scale(client.focus, {
             to_percent = 0.5,
             direction = "up",
@@ -454,6 +478,7 @@ local clientkeys = gears.table.join(
     end, { description = "Snap bottom right", group = "layout" }),
     awful.key({ modkey, "Control" }, "Left", function(client)
         client.maximized_vertical = false
+        client.maximized = false
         awful.placement.scale(client.focus, {
             to_percent = 0.5,
             direction = "up",
@@ -623,19 +648,26 @@ awful.rules.rules = {
                 "tf_linux",
                 "osu!.exe",
                 "steam_app_727",
+                "steam_app_207140",
                 "osu!",
                 "Terraria.bin.x86_64",
+                "steam_app_2379780",
                 "portal2_linux",
+                "Buckshot Roulette",
                 "Pinball FX3.exe",
                 "Pinball FX.exe",
                 "SlimeRancher.x86_64",
                 "warfork.x86_64",
+                "SpaceChem",
                 "LoE.x86_64",
                 "Anonfilly.exe",
                 "GeometryDash.exe",
                 "MLP.exe",
                 "gmod",
-                "steam_app_4000"
+                "steam_app_4000",
+                "steam_app_3218710",
+                "steam_app_307780",
+                "tetrio-desktop"
             },
             name = {
                 "MTA: San Andreas",
@@ -712,4 +744,5 @@ gears.timer.start_new(10, function()
 end)
 
 -- awful.spawn.with_shell("bash -c \"pgrep aw-qt || aw-qt > /dev/null 2>&1\"")
-awful.spawn.easy_async_with_shell("bash -c \"pgrep whatpulse || whatpulse > /dev/null 2>&1\"", function() end)
+-- awful.spawn.easy_async_with_shell("bash -c \"pgrep whatpulse || whatpulse > /dev/null 2>&1\"", function() end)
+awful.spawn.easy_async_with_shell("bash ~/.config/awesome/internetCheck.sh", function() end)
