@@ -12,6 +12,8 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
+
+
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
@@ -19,7 +21,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local switcher = require("awesome-switcher")
 
-local internet_widget = require("internet");
 local volume_widget = require("volume")
 local caps_widget = require("caps");
 local battery_widget = require("battery-widget.battery")
@@ -31,6 +32,7 @@ local cw = calendar_widget({
     radius = 5,
 });
 
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -41,6 +43,7 @@ if awesome.startup_errors then
         text = awesome.startup_errors
     })
 end
+
 
 -- Handle runtime errors after startup
 do
@@ -64,20 +67,6 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("~/.config/awesome/theme.lua")
 naughty.config.defaults['icon_size'] = 128
-
-
-local dbusName = 'org.awesomewm.CustomInterface'
-local dbusMatch = "interface='org.awesomewm.CustomInterface', member='MyCustomMessage'"
-
-dbus.request_name("session", dbusName)
-
-dbus.add_match("session", dbusMatch)
-
-dbus.connect_signal(dbusName, function(bus, sender, message, _, _, _)
-    if sender == "internet" then
-        internet_widget:setStatus(message == "good internet")
-    end
-end)
 
 
 -- This is used later as the default terminal and editor to run.
@@ -107,9 +96,6 @@ local function file_exists(name)
 end
 
 local function custom_restart()
-    dbus.remove_match("session", dbusMatch)
-    dbus.release_name('session', dbusName)
-
     awesome.restart()
 end
 
@@ -229,7 +215,6 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             volume_widget {},
-            internet_widget {},
             caps_widget {},
             battery_widget({
                 show_current_level = true
@@ -745,4 +730,3 @@ end)
 
 -- awful.spawn.with_shell("bash -c \"pgrep aw-qt || aw-qt > /dev/null 2>&1\"")
 -- awful.spawn.easy_async_with_shell("bash -c \"pgrep whatpulse || whatpulse > /dev/null 2>&1\"", function() end)
-awful.spawn.easy_async_with_shell("bash ~/.config/awesome/internetCheck.sh", function() end)
