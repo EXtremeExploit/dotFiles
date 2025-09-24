@@ -627,32 +627,36 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
+                "Anonfilly.exe",
+                "Buckshot Roulette",
                 "csgo_linux64",
                 "cs2",
-                "hl2_linux",
-                "tf_linux",
-                "osu!.exe",
-                "steam_app_727",
-                "steam_app_207140",
-                "osu!",
-                "Terraria.bin.x86_64",
-                "steam_app_2379780",
-                "portal2_linux",
-                "Buckshot Roulette",
-                "Pinball FX3.exe",
-                "Pinball FX.exe",
-                "SlimeRancher.x86_64",
-                "warfork.x86_64",
-                "SpaceChem",
-                "LoE.x86_64",
-                "Anonfilly.exe",
+                "factorio",
                 "GeometryDash.exe",
-                "MLP.exe",
                 "gmod",
-                "steam_app_4000",
-                "steam_app_3218710",
-                "steam_app_307780",
-                "tetrio-desktop"
+                "hl2_linux",
+                "LoE.x86_64",
+                "MLP.exe",
+                "osu!.exe",
+                "osu!",
+                "Pinball FX.exe",
+                "Pinball FX3.exe",
+                "portal2_linux",
+                "SlimeRancher.x86_64",
+                "SpaceChem",
+                "steam_app_727",     -- osu
+                "steam_app_4000",    -- gmod
+                "steam_app_204360",  -- castle crashers
+                "steam_app_207140",  -- Speedrunners
+                "steam_app_307780",  -- Mortal Kombat X
+                "steam_app_945360",  -- Among Us
+                "steam_app_2379780", -- Balatro
+                "steam_app_3224770", -- Uma musume pretty derby
+                "steam_app_3730770", -- Speedrunners 2
+                "Terraria.bin.x86_64",
+                "tetrio-desktop",
+                "tf_linux",
+                "warfork.x86_64",
             },
             name = {
                 "MTA: San Andreas",
