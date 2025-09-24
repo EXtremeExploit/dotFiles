@@ -21,7 +21,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local switcher = require("awesome-switcher")
 
-local volume_widget = require("volume")
+local volume = require("volume")
 local caps_widget = require("caps");
 local battery_widget = require("battery-widget.battery")
 local calendar_widget = require("calendar-widget.calendar")
@@ -119,8 +119,8 @@ local mytextclock = wibox.widget.textclock("%A-%B (UTC" .. timezone .. ") / %Y-%
 mytextclock:connect_signal("button::press", function(_, _, _, button)
     if button == 1 then cw.toggle() end
     if button == 2 then awful.spawn.easy_async("playerctl play-pause", function() end) end
-    if button == 4 then volume_widget:inc() end
-    if button == 5 then volume_widget:dec() end
+    if button == 4 then volume:inc() end
+    if button == 5 then volume:dec() end
 end)
 
 -- Create a wibox for each screen and add it
@@ -138,10 +138,10 @@ local taglist_buttons = gears.table.join(
         end
     end),
     awful.button({}, 4, function(t)
-        volume_widget:inc()
+        volume:inc()
     end),
     awful.button({}, 5, function(t)
-        volume_widget:dec()
+        volume:dec()
     end)
 )
 
@@ -159,9 +159,9 @@ local tasklist_buttons = gears.table.join(
     end),
 
     awful.button({}, 2, function(c) awful.spawn.easy_async("playerctl play-pause", function() end) end),
-    awful.button({ modkey }, 2, function(c) volume_widget:toggle() end),
-    awful.button({}, 4, function() volume_widget:inc() end),
-    awful.button({}, 5, function() volume_widget:dec() end))
+    awful.button({ modkey }, 2, function(c) volume:toggle() end),
+    awful.button({}, 4, function() volume:inc() end),
+    awful.button({}, 5, function() volume:dec() end))
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -214,7 +214,7 @@ awful.screen.connect_for_each_screen(function(s)
         {             -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-            volume_widget {},
+            volume {},
             caps_widget {},
             battery_widget({
                 show_current_level = true
@@ -243,18 +243,18 @@ local globalkeys = gears.table.join(
         { description = "show the menubar", group = "launcher" }),
 
     -- Media Keys
-    -- awful.key({}, "XF86AudioMute", function() volume_widget:toggle() end),
+    -- awful.key({}, "XF86AudioMute", function() volume:toggle() end),
     -- awful.key({}, "XF86AudioPlay", function() awful.spawn.easy_async("playerctl play-pause", function() end) end),
     -- awful.key({}, "XF86AudioPrev", function() awful.spawn.easy_async("playerctl previous", function() end) end),
     -- awful.key({}, "XF86AudioNext", function() awful.spawn.easy_async("playerctl next", function() end) end),
     -- awful.key({}, "XF86AudioRaiseVolume", function()
-    --     volume_widget:inc()
+    --     volume:inc()
     -- end),
     -- awful.key({}, "XF86AudioLowerVolume", function()
-    --     volume_widget:dec()
+    --     volume:dec()
     -- end),
 
-    awful.key({ modkey }, "Escape", function() volume_widget:toggle() end,
+    awful.key({ modkey }, "Escape", function() volume:toggle() end,
         { description = "Toggle playback mute", group = "media" }),
     awful.key({ modkey }, "a", function() awful.spawn.easy_async("playerctl previous", function() end) end,
         { description = "Previous track", group = "media" }),
@@ -264,10 +264,10 @@ local globalkeys = gears.table.join(
         { description = "Play/Pause track", group = "media" }),
 
     awful.key({ modkey }, "w", function()
-        volume_widget:inc()
+        volume:inc()
     end, { description = "Increment volume", group = "media" }),
     awful.key({ modkey }, "s", function()
-        volume_widget:dec()
+        volume:dec()
     end, { description = "Decrease volume", group = "media" }),
 
     -- Screenshotting
