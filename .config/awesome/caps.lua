@@ -12,9 +12,9 @@ end
 local caps = {}
 
 local function worker()
-    local refresh_rate = 0.5;
+    local refresh_rate = 5;
 
-    local lastKnownCaps = false;
+    local lastKnownCaps = 0;
 
     caps.widget = wibox.widget {
         {
@@ -39,16 +39,19 @@ local function worker()
     end
 
     function caps:refresh()
-        if not lastKnownCaps then
-            caps.widget:setInnerText("a");
-        else
+        if lastKnownCaps > 0 then
             caps.widget:setInnerText("A");
+        else
+            caps.widget:setInnerText("a");
         end
     end
 
     function caps:toggle()
-        -- lastKnownCaps = xkb.caps_lock();
-        lastKnownCaps = not lastKnownCaps;
+        if lastKnownCaps > 0 then
+            lastKnownCaps = 0;
+        else 
+            lastKnownCaps = 1;
+        end
         caps:refresh();
     end
 
