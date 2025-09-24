@@ -311,9 +311,8 @@ local globalkeys = gears.table.join(
         end
         , { description = "Capture window and save it to a file", group = "screenshot" }),
 
-    -- Alt+Tab
-    awful.key({ altkey }, "Tab", function() switcher.switch(1, altkey, "Alt_L", "Shift", "Tab") end),
-    awful.key({ altkey, "Shift" }, "Tab", function() switcher.switch(-1, altkey, "Alt_L", "Shift", "Tab") end),
+    awful.key({ modkey }, "Tab", function() switcher.switch(1, modkey, "Super_L", "Shift", "Tab") end),
+    awful.key({ modkey, "Shift" }, "Tab", function() switcher.switch(-1, modkey, "Super_L", "Shift", "Tab") end),
     awful.key({ modkey }, "e", function() awful.spawn.easy_async("nemo", function() end) end,
         { description = "Open Nemo" }),
     awful.key({ modkey }, "b", function() awful.spawn.easy_async("brave", function() end) end,
