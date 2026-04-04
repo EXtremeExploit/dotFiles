@@ -1,4 +1,5 @@
 {
+  "Revision": "0.6.6.2",
   "Profiles": [
     {
       "Tablet": "Wacom CTL-472",
@@ -9,50 +10,22 @@
       },
       "Filters": [
         {
-          "Path": "Chatter_Exterminator.Chatter_Exterminator_Filter",
+          "Path": "BezierInterpolator.BezierInterp",
           "Settings": [
             {
-              "Property": "AntichatterStrength",
-              "Value": 2.0
-            }
-          ],
-          "Enable": true
-        },
-        {
-          "Path": "RadialFollow.RadialFollowSmoothing",
-          "Settings": [
-            {
-              "Property": "OuterRadius",
+              "Property": "SmoothingFactor",
               "Value": 1.0
             },
             {
-              "Property": "InnerRadius",
-              "Value": 0.05
+              "Property": "TiltSmoothingFactor",
+              "Value": 1.0
             },
             {
-              "Property": "SmoothingCoefficient",
-              "Value": 0.92
-            },
-            {
-              "Property": "SoftKneeScale",
-              "Value": 3.0
-            },
-            {
-              "Property": "SmoothingLeakCoefficient",
-              "Value": 0.0
+              "Property": "Frequency",
+              "Value": 1000.0
             }
           ],
           "Enable": false
-        },
-        {
-          "Path": "Kuuube_s_Chatter_Exterminator.Kuuube_s_CHATTER_EXTERMINATOR_RAW",
-          "Settings": [
-            {
-              "Property": "Chatter_Extermination_Strength",
-              "Value": 2.0
-            }
-          ],
-          "Enable": true
         },
         {
           "Path": "Kuuube_s_Chatter_Exterminator.Kuuube_s_CHATTER_EXTERMINATOR_SMOOTH",
@@ -69,54 +42,14 @@
           "Enable": false
         },
         {
-          "Path": "Circular_Area.Circular_Vertical_Squelch_Open_Mapping",
-          "Settings": [],
-          "Enable": false
-        },
-        {
-          "Path": "Circular_Area.Circular_Biased_Squelch_Horizontal",
+          "Path": "Kuuube_s_Chatter_Exterminator.Kuuube_s_CHATTER_EXTERMINATOR_RAW",
           "Settings": [
             {
-              "Property": "B_raw",
-              "Value": null
+              "Property": "Chatter_Extermination_Strength",
+              "Value": 2.0
             }
           ],
-          "Enable": false
-        },
-        {
-          "Path": "Circular_Area.Circular_Power2_Blend",
-          "Settings": [
-            {
-              "Property": "B_raw",
-              "Value": null
-            }
-          ],
-          "Enable": false
-        },
-        {
-          "Path": "Circular_Area.Circular_Non_axial_Half_Punch_Mapping",
-          "Settings": [],
-          "Enable": false
-        },
-        {
-          "Path": "Circular_Area.Circular_Simple_Stretch",
-          "Settings": [],
-          "Enable": false
-        },
-        {
-          "Path": "Circular_Area.Circular_Simple_Stretch_Inverse",
-          "Settings": [],
-          "Enable": false
-        },
-        {
-          "Path": "Circular_Area.Circular_Tapered4_Mapping_Inverse",
-          "Settings": [],
-          "Enable": false
-        },
-        {
-          "Path": "Circular_Area.Circular_Squelched_Grid_Open_Mapping_Inverse",
-          "Settings": [],
-          "Enable": false
+          "Enable": true
         }
       ],
       "AbsoluteModeSettings": {
@@ -131,27 +64,159 @@
           "Width": 70.0,
           "Height": 39.375,
           "X": 38.723186,
-          "Y": 67.43004,
+          "Y": 67.43003,
           "Rotation": 166.0
         },
-        "EnableClipping": false,
+        "EnableClipping": true,
         "EnableAreaLimiting": false,
         "LockAspectRatio": true
       },
       "RelativeModeSettings": {
-        "XSensitivity": 0.0,
-        "YSensitivity": 0.0,
+        "XSensitivity": 10.0,
+        "YSensitivity": 10.0,
         "RelativeRotation": 0.0,
-        "RelativeResetDelay": "00:00:00"
+        "RelativeResetDelay": "00:00:00.1000000"
       },
       "Bindings": {
-        "TipActivationThreshold": 0.0,
+        "TipActivationThreshold": 7.0,
         "TipButton": null,
-        "EraserActivationThreshold": 0.0,
-        "EraserButton": null,
+        "EraserActivationThreshold": 1.0,
+        "EraserButton": {
+          "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+          "Settings": [
+            {
+              "Property": "Binding",
+              "Value": "Eraser"
+            }
+          ],
+          "Enable": true
+        },
         "PenButtons": [
-          null,
-          null
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+            "Settings": [
+              {
+                "Property": "Binding",
+                "Value": "Button 1"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+            "Settings": [
+              {
+                "Property": "Binding",
+                "Value": "Button 2"
+              }
+            ],
+            "Enable": true
+          }
+        ],
+        "AuxButtons": [],
+        "MouseButtons": [],
+        "MouseScrollUp": null,
+        "MouseScrollDown": null,
+        "DisablePressure": false,
+        "DisableTilt": false
+      }
+    },
+    {
+      "Tablet": "Wacom PTH-651",
+      "OutputMode": {
+        "Path": "OpenTabletDriver.Desktop.Output.LinuxArtistMode",
+        "Settings": [],
+        "Enable": true
+      },
+      "Filters": [
+        {
+          "Path": "BezierInterpolator.BezierInterp",
+          "Settings": [
+            {
+              "Property": "SmoothingFactor",
+              "Value": 1.0
+            },
+            {
+              "Property": "TiltSmoothingFactor",
+              "Value": 1.0
+            },
+            {
+              "Property": "Frequency",
+              "Value": 1000.0
+            }
+          ],
+          "Enable": true
+        }
+      ],
+      "AbsoluteModeSettings": {
+        "Display": {
+          "Width": 1920.0,
+          "Height": 1080.0,
+          "X": 960.0,
+          "Y": 540.0,
+          "Rotation": 0.0
+        },
+        "Tablet": {
+          "Width": 223.52,
+          "Height": 139.7,
+          "X": 111.759995,
+          "Y": 69.850006,
+          "Rotation": 180.0
+        },
+        "EnableClipping": true,
+        "EnableAreaLimiting": false,
+        "LockAspectRatio": false
+      },
+      "RelativeModeSettings": {
+        "XSensitivity": 10.0,
+        "YSensitivity": 10.0,
+        "RelativeRotation": 0.0,
+        "RelativeResetDelay": "00:00:00.1000000"
+      },
+      "Bindings": {
+        "TipActivationThreshold": 1.0,
+        "TipButton": {
+          "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+          "Settings": [
+            {
+              "Property": "Binding",
+              "Value": "Tip"
+            }
+          ],
+          "Enable": true
+        },
+        "EraserActivationThreshold": 1.0,
+        "EraserButton": {
+          "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+          "Settings": [
+            {
+              "Property": "Binding",
+              "Value": "Eraser"
+            }
+          ],
+          "Enable": true
+        },
+        "PenButtons": [
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+            "Settings": [
+              {
+                "Property": "Binding",
+                "Value": "Button 1"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+            "Settings": [
+              {
+                "Property": "Binding",
+                "Value": "Button 2"
+              }
+            ],
+            "Enable": true
+          }
         ],
         "AuxButtons": [
           null,
@@ -165,7 +230,9 @@
         ],
         "MouseButtons": [],
         "MouseScrollUp": null,
-        "MouseScrollDown": null
+        "MouseScrollDown": null,
+        "DisablePressure": false,
+        "DisableTilt": false
       }
     }
   ],
