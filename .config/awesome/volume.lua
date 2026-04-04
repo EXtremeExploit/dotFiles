@@ -3,21 +3,14 @@ local beautiful = require('beautiful')
 local gears = require("gears")
 local wibox = require("wibox")
 
-local utils = require('utils');
-local isPAOk = utils.isModuleAvailable("pulseaudio") and _VERSION == "Lua 5.4";
-
-if isPAOk then
-    pa = require("pulseaudio");
-end
-
 local widget = {}
 
 local function worker()
-    local refresh_rate = 1;
+    local refresh_rate = 5;
     local step = 2;
 
     local volume = 0;
-    local isMuted = false;
+    local muted = false;
 
     widget.widget = wibox.widget {
         {
@@ -31,83 +24,60 @@ local function worker()
         end
     }
 
-    local function getDefaultSink()
-        if isPAOk then
-            local sinks = pa.get_sinks()
-            for _, value in pairs(sinks) do
-                if value.default then
-                    return value;
-                end
-            end
-        end
-        return {};
-    end
-
     function widget:refresh()
-        local status;
-        if isMuted then
-            status = string.format("% 3dM ", volume)
+        if muted then
+            widget.widget:setInnerText(string.format("% 3dM ", volume));
         else
-            status = string.format("% 3d%% ", volume)
+            widget.widget:setInnerText(string.format("% 3d%% ", volume));
         end
-        widget.widget:setInnerText(status);
     end
 
-    local function updateCachedStatus()
-        if isPAOk then
-            local sink = getDefaultSink();
-            volume = sink.volume or 0;
-            isMuted = sink.mute or false;
-
-            if not (volume % 2 == 0) then
-                volume = volume - 1;
-
-                pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
+    local function read_status(callback)
+        awful.spawn.easy_async_with_shell(
+            "wpctl get-volume @DEFAULT_AUDIO_SINK@",
+            function(out)
+                local v = tonumber(out:match("(%d+%.?%d*)")) or 0
+                volume = math.floor(v * 100 + 0.5)
+                muted = out:match("MUTED") ~= nil
+                if callback then callback() end
             end
-        end
-        widget:refresh();
+        )
+    end
+
+    local function set_volume()
+        -- clamp to 0–100
+        volume = math.max(0, math.min(100, volume))
+        awful.spawn(
+            string.format(
+                "wpctl set-volume @DEFAULT_AUDIO_SINK@ %.2f",
+                volume / 100
+            )
+        )
+    end
+
+    local function toggle_mute()
+        awful.spawn("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")
     end
 
     function widget:inc()
-        if isPAOk then
-            local sink = getDefaultSink();
-            local newVol = math.min(100, sink.volume + step);
-            if sink.volume == newVol then
-                return;
-            end
-            volume = newVol;
-            isMuted = sink.mute;
-
-            widget:refresh();
-            pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
-        end
+        read_status(function()
+            volume = volume + step
+            set_volume()
+            widget:refresh()
+        end)
     end
 
     function widget:dec()
-        if isPAOk then
-            local sink = getDefaultSink();
-            local newVol = math.max(0, sink.volume - step);
-            if sink.volume == newVol then
-                return;
-            end
-            volume = newVol;
-            isMuted = sink.mute;
-
-            widget:refresh();
-            pa.set_sink_volume(sink.index, { volume = volume, mute = isMuted });
-        end
+        read_status(function()
+            volume = volume - step
+            set_volume()
+            widget:refresh()
+        end)
     end
 
     function widget:toggle()
-        if isPAOk then
-            local sink = getDefaultSink();
-
-            volume = sink.volume;
-            isMuted = not sink.mute;
-
-            pa.set_sink_volume(sink.index, { volume = sink.volume, mute = isMuted });
-        end
-        widget:refresh();
+        toggle_mute()
+        read_status(widget.refresh)
     end
 
     widget.widget:buttons(
@@ -121,7 +91,9 @@ local function worker()
         timeout = refresh_rate,
         call_now = true,
         autostart = true,
-        callback = updateCachedStatus
+        callback = function()
+            read_status(widget.refresh)
+        end
     }
 
     return widget.widget;

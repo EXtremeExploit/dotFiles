@@ -65,13 +65,13 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/theme.lua")
+beautiful.init("~/.config/awesome/themes/nanahira/theme.lua")
 naughty.config.defaults['icon_size'] = 128
 
 
 -- This is used later as the default terminal and editor to run.
 local terminal = "kitty"
-local editor = os.getenv("EDITOR") or "code"
+local editor = os.getenv("EDITOR") or "nvim"
 local editor_cmd = terminal .. " -e " .. editor
 
 local tags = { "M", "H", "F" };
@@ -102,7 +102,7 @@ end
 local mymainmenu = awful.menu({
     items = {
         { "hotkeys",       function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-        { "edit config",   function() awful.spawn.easy_async(editor .. " .config/awesome/", function() end) end },
+        { "edit config",   function() awful.spawn.easy_async(editor_cmd .. " .config/awesome/", function() end) end },
         { "open terminal", terminal },
         { "restart",       custom_restart },
         { "quit",          function() awesome.quit() end },
@@ -310,7 +310,6 @@ local globalkeys = gears.table.join(
                 function() end)
         end
         , { description = "Capture window and save it to a file", group = "screenshot" }),
-
     awful.key({ modkey }, "Tab", function() switcher.switch(1, modkey, "Super_L", "Shift", "Tab") end),
     awful.key({ modkey, "Shift" }, "Tab", function() switcher.switch(-1, modkey, "Super_L", "Shift", "Tab") end),
     awful.key({ modkey }, "e", function() awful.spawn.easy_async("nemo", function() end) end,
@@ -362,8 +361,14 @@ local clientkeys = gears.table.join(
         end,
         { description = "toggle fullscreen", group = "client" }),
     awful.key({ modkey, "Shift" }, "z", function(c) c:kill() end, { description = "close", group = "client" }),
-    awful.key({ modkey, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
-        { description = "move to master", group = "client" }),
+    awful.key({ modkey, altkey }, "Left", function(c)
+            awful.client.swap.byidx(-1)
+        end,
+        { description = "move to left in taskbar", group = "client" }),
+    awful.key({ modkey, altkey }, "Right", function(c)
+            awful.client.swap.byidx(1)
+        end,
+        { description = "move to right in taskbar", group = "client" }),
     awful.key({ modkey }, "t", function(c) c.ontop = not c.ontop end,
         { description = "toggle keep on top", group = "client" }),
     awful.key({ modkey }, "x", function(c) c.sticky = not c.sticky end,
@@ -522,8 +527,6 @@ local gameKeys = gears.table.join(
         end,
         { description = "toggle fullscreen", group = "client" }),
     awful.key({ modkey, "Shift" }, "z", function(c) c:kill() end, { description = "close", group = "client" }),
-    awful.key({ modkey, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
-        { description = "move to master", group = "client" }),
     awful.key({ modkey }, "t", function(c) c.ontop = not c.ontop end,
         { description = "toggle keep on top", group = "client" }),
     awful.key({ modkey }, "x", function(c) c.sticky = not c.sticky end,
@@ -626,12 +629,13 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
+                "100orange",
                 "Anonfilly.exe",
                 "Buckshot Roulette",
                 "csgo_linux64",
                 "cs2",
+                "Despotism3k.x86_64",
                 "factorio",
-                "GeometryDash.exe",
                 "gmod",
                 "hl2_linux",
                 "LoE.x86_64",
@@ -641,20 +645,26 @@ awful.rules.rules = {
                 "Pinball FX.exe",
                 "Pinball FX3.exe",
                 "portal2_linux",
+                "Skullgirls.x86_64-pc-linux-gnu",
                 "SlimeRancher.x86_64",
                 "SpaceChem",
                 "steam_app_727",     -- osu
                 "steam_app_4000",    -- gmod
                 "steam_app_204360",  -- castle crashers
                 "steam_app_207140",  -- Speedrunners
+                "steam_app_322170",  -- Geometry Dash
                 "steam_app_307780",  -- Mortal Kombat X
+                "steam_app_438100",  -- VR Chat
                 "steam_app_945360",  -- Among Us
                 "steam_app_2379780", -- Balatro
                 "steam_app_3224770", -- Uma musume pretty derby
                 "steam_app_3730770", -- Speedrunners 2
+                "steam_app_3897800", -- Poker Night at the Inventory
+                "steam_app_4042800", -- Poker
                 "Terraria.bin.x86_64",
                 "tetrio-desktop",
                 "tf_linux",
+                "VVVVVV",
                 "warfork.x86_64",
             },
             name = {
